@@ -1,0 +1,7 @@
+# Drop README assets here:
+#   demo.gif            - main showcase loop (overlay over CS2)
+#   esp_box.png         - bone/bounds ESP box on enemies
+#   menu_esp.png        - PySide6 menu, ESP panel
+#   menu_combat.png     - PySide6 menu, Combat panel
+#   glow.png            - native CGlowProperty glow
+# Filenames referenced by README.md — keep them in sync.

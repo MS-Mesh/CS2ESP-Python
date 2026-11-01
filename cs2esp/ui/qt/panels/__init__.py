@@ -1,4 +1,6 @@
-"""Settings panels, one per sidebar entry."""
+"""
+Settings panels, one per sidebar entry.
+"""
 
 from cs2esp.ui.qt.panels.anti_detection import AntiDetectionPanel
 from cs2esp.ui.qt.panels.awareness import AwarenessPanel
@@ -10,14 +12,4 @@ from cs2esp.ui.qt.panels.norecoil import NoRecoilPanel
 from cs2esp.ui.qt.panels.radar import RadarPanel
 from cs2esp.ui.qt.panels.settings import SettingsPanel
 
-__all__ = [
-    "AntiDetectionPanel",
-    "AwarenessPanel",
-    "CombatPanel",
-    "ESPPanel",
-    "KeybindsPanel",
-    "NoRecoilPanel",
-    "PanelBase",
-    "RadarPanel",
-    "SettingsPanel",
-]
+__all__ = ["AntiDetectionPanel", "AwarenessPanel", "CombatPanel", "ESPPanel", "KeybindsPanel", "NoRecoilPanel", "PanelBase", "RadarPanel", "SettingsPanel"]

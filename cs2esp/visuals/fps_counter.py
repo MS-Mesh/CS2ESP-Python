@@ -1,133 +1,257 @@
-"""Configurable FPS, ping, and jitter overlay widget."""
+"""
+Configurable FPS, ping, jitter, CPU and RAM overlay in horizontal capsule pills.
+The saved frame width drives the content scale; each pill fits its live text.
+"""
 
-from imgui_bundle import imgui
+import math
+from time import strftime
 
-from cs2esp.ui.fonts import get_fonts_for_current_context, pop as pop_font, push_sized
-from cs2esp.visuals.theme import color_u32, with_alpha
+from cs2esp.visuals.icons import (
+	draw_ambient_shadow, draw_bars_glyph, draw_clock_glyph, draw_icon_outline, draw_user_glyph,
+	draw_waveform_glyph, draw_wifi_waves_glyph, resolve_hud_theme, resolve_icon_style)
+from cs2esp.ui.fonts import get_fonts_for_current_context, pop as pop_font, push_sized, snap_size, text_size
+from cs2esp.visuals.hud_manager import HudPositionManager
+from cs2esp.visuals.theme import color_u32
 
 
-def draw_fps_counter(draw_list, screen_w: int, screen_h: int, cfg,
-                     fps: float | None,
-                     ping_ms: int | None = None,
-                     jitter_ms: int | None = None) -> None:
-    """Draw whichever of FPS, ping, and jitter the user has enabled."""
-    if not bool(getattr(cfg, "enabled", False)):
-        return
+def _available_number(value):
+	'''Return a finite nonnegative measurement, or None when unavailable.'''
+	if value is None:
+		return None
+	try:
+		number = float(value)
+	except (TypeError, ValueError, OverflowError):
+		return None
+	return number if math.isfinite(number) and number >= 0.0 else None
 
-    show_fps = bool(getattr(cfg, "show_fps", True))
-    show_ping = bool(getattr(cfg, "show_ping", False))
-    show_jitter = bool(getattr(cfg, "show_jitter", False))
 
-    def _rgba(name: str, default, alpha_name: str) -> tuple[float, float, float, float]:
-        color = tuple(getattr(cfg, name, default))
-        alpha = float(getattr(cfg, alpha_name, -1.0))
-        if alpha >= 0.0:
-            color = with_alpha(color, alpha)
-        return color
+def draw_fps_counter(
+	draw_list,
+	screen_w: int,
+	screen_h: int,
+	cfg,
+	fps: float | None,
+	ping_ms: int | None = None,
+	jitter_ms: int | None = None,
+	latency_ms: float | None = None,
+	cpu_percent: float | None = None,
+	sys_cpu_percent: float | None = None,
+	ram_mb: float | None = None,
+	ram_pair: tuple[float, float] | None = None,
+	hud_manager: HudPositionManager | None = None,
+	interactive: bool = False,
+	theme_name: str | None = None,
+	root_config=None,
+	fps_source: str | None = None,
+	overlay_fps: float | None = None,
+) -> None:
+	'''Draw whichever of FPS, ping, latency, and jitter the user has enabled.'''
+	if not bool(getattr(cfg, "enabled", False)):
+		return
 
-    fps_col = _rgba("text_color", (0.0, 0.85, 0.85, 1.0), "text_alpha")
-    ping_col = _rgba("ping_color", (0.4, 0.85, 0.4, 1.0), "ping_alpha")
-    jitter_col = _rgba("jitter_color", (0.4, 0.85, 0.4, 1.0), "jitter_alpha")
+	show_fps = bool(getattr(cfg, "show_fps", True))
+	show_ping = bool(getattr(cfg, "show_ping", True))
+	show_jitter = bool(getattr(cfg, "show_jitter", False))
 
-    # Measurement and rendering both run inside push_sized(font, user_px) so calc_text_size returns the pixel height add_text uses - slider value is the literal rendered height.
-    entries: list[tuple[str, str, tuple[float, float, float, float], object, float]] = []
+	style = str(getattr(cfg, "style", "capsule") or "capsule").lower()
 
-    fonts = get_fonts_for_current_context()
-    main_font = getattr(fonts, "h2", None) if fonts is not None else None
-    sub_font = getattr(fonts, "body", None) if fonts is not None else None
-    # Baked sizes are the fallback when user config is unset/0; panel slider defaults to them so first-launch matches the look.
-    main_baked = float(getattr(main_font, "font_size", 28.0) or 28.0) if main_font else 28.0
-    sub_baked = float(getattr(sub_font, "font_size", 18.0) or 18.0) if sub_font else 18.0
-    user_main_px = float(getattr(cfg, "font_size", main_baked) or main_baked)
-    user_sub_px = float(getattr(cfg, "ping_font_size",
-                                  getattr(cfg, "sub_font_size", sub_baked))
-                        or sub_baked)
-    user_jitter_px = float(getattr(cfg, "jitter_font_size",
-                                     getattr(cfg, "sub_font_size", sub_baked))
-                           or sub_baked)
+	fps_value = _available_number(fps)
+	ping_value = _available_number(ping_ms)
+	fps_text = f"{int(round(fps_value))} fps" if fps_value is not None else "-- fps"
+	ping_text = f"{int(ping_value)} ms" if ping_value is not None else "-- ms"
 
-    if show_fps and fps is not None:
-        entries.append(("fps", f"{int(round(fps))} fps", fps_col,
-                        main_font, user_main_px))
-    if show_ping and ping_ms is not None and ping_ms >= 0:
-        entries.append(("ping", f"{int(ping_ms)} ms", ping_col,
-                        sub_font, user_sub_px))
-    if show_jitter and jitter_ms is not None and jitter_ms >= 0:
-        entries.append(("jitter", f"\u00b1{int(jitter_ms)} ms",
-                        jitter_col, sub_font, user_jitter_px))
-    if not entries:
-        return
+	fonts = get_fonts_for_current_context()
+	body_font = getattr(fonts, "body", None) if fonts is not None else None
 
-    line_widths: list[float] = []
-    line_heights: list[float] = []
-    for _kind, text, _color, font, size_px in entries:
-        pushed = push_sized(font, size_px)
-        try:
-            text_size = imgui.calc_text_size(text)
-        finally:
-            pop_font(pushed)
-        line_widths.append(text_size.x)
-        line_heights.append(text_size.y)
-    text_w = max(line_widths)
+	theme = resolve_hud_theme(root_config) if root_config is not None else None
+	icon_style = resolve_icon_style(root_config, theme=theme) if root_config is not None else None
 
-    # Per-gap spacing scales with FPS line height: fps<->ping gap = 1.5x base, else 1.0x. Floor 4px so tiny fonts don't collapse lines together.
-    fps_line_h = line_heights[0] if entries[0][0] == "fps" else (
-        next((line_heights[i] for i, e in enumerate(entries) if e[0] == "fps"),
-             line_heights[0])
-    )
-    base_gap = max(4.0, fps_line_h * 0.22)
-    gaps: list[float] = []
-    for i in range(1, len(entries)):
-        prev_kind = entries[i - 1][0]
-        gaps.append(base_gap * (1.5 if prev_kind == "fps" else 1.0))
+	show_time = bool(getattr(cfg, "show_time", False))
 
-    text_h = sum(line_heights) + sum(gaps)
+	items_to_render: list[tuple[str, str, int, str]] = []
+	if bool(getattr(cfg, "show_brand", False)):
+		brand_name = str(getattr(cfg, "brand_text", "") or "msmesh").strip()
+		if brand_name:
+			items_to_render.append(("triangle", brand_name, 0xFFFFFFFF, brand_name))
+	if bool(getattr(cfg, "show_user", False)):
+		user_name = str(getattr(cfg, "user_name", "") or "user").strip()
+		if user_name:
+			items_to_render.append(("user", user_name, 0xFFD0D6E2, user_name))
 
-    # Text is inset only when the background box is enabled.
-    position = str(getattr(cfg, "position", "top_left") or "top_left")
-    right_aligned = position in ("top_right", "bottom_right")
-    bottom_aligned = position in ("bottom_left", "bottom_right")
-    margin_x = float(getattr(cfg, "margin_x", 12.0))
-    margin_y = float(getattr(cfg, "margin_y", 12.0))
-    anchor_x = screen_w - margin_x if right_aligned else margin_x
-    anchor_y = screen_h - margin_y if bottom_aligned else margin_y
-    pad = max(0.0, float(getattr(cfg, "box_padding", 6.0)))
-    box_on = bool(getattr(cfg, "box_enabled", False))
-    inner_pad = pad if box_on else 0.0
+	# Reference widths preserve the saved font scale
+	if show_fps:
+		items_to_render.append(("bars", fps_text, 0xFFFFFFFF, "999 fps"))
+	if bool(getattr(cfg, "show_overlay_fps", False)):
+		loop_fps = _available_number(overlay_fps)
+		loop_text = f"loop {int(round(loop_fps))} fps" if loop_fps is not None else "loop -- fps"
+		items_to_render.append(("loop_bars", loop_text, 0xFFFFFFFF, "loop 999 fps"))
+	if show_ping:
+		items_to_render.append(("wifi", ping_text, 0xFFD0D6E2, "999 ms"))
+	if bool(getattr(cfg, "show_latency", True)):
+		# Present-to-display timing is not input-to-display latency
+		latency = _available_number(latency_ms)
+		latency_text = f"{int(round(latency))} ms" if latency is not None else "-- ms"
+		items_to_render.append(("waveform", latency_text, 0xFF88A8FF, "999 ms"))
+	if bool(getattr(cfg, "show_cpu", True)):
+		# Real system-wide CPU load, the same number Task Manager shows
+		cpu_src = _available_number(sys_cpu_percent)
+		cpu_text = f"cpu {int(round(cpu_src))}%" if cpu_src is not None else "cpu --%"
+		items_to_render.append(("chip", cpu_text, 0xFF88A8FF, "cpu 100%"))
+	if show_jitter:
+		jitter = _available_number(jitter_ms)
+		jitter_text = f"±{int(round(jitter))} ms" if jitter is not None else "±-- ms"
+		items_to_render.append(("bars", jitter_text, 0xFF9CA3AF, "±999 ms"))
+	if bool(getattr(cfg, "show_ram", False)):
+		ram_text = "--/-- GB"
+		if isinstance(ram_pair, (tuple, list)) and len(ram_pair) >= 2:
+			used, total = (_available_number(ram_pair[0]), _available_number(ram_pair[1]))
+			if used is not None and total is not None and total > 0.0:
+				ram_text = f"{used:.1f}/{total:.1f} GB"
+		items_to_render.append(("memory", ram_text, 0xFF9CA3AF, "99.9/99.9 GB"))
 
-    text_x0 = (anchor_x - text_w - inner_pad
-               if right_aligned else anchor_x + inner_pad)
-    text_y0 = (anchor_y - text_h - inner_pad
-               if bottom_aligned else anchor_y + inner_pad)
+	# Optional clock, off by default
+	if show_time:
+		items_to_render.append(("clock", strftime("%H:%M"), 0xFFD0D6E2, "00:00"))
 
-    if box_on:
-        box_col = tuple(getattr(cfg, "box_color", (0.0, 0.0, 0.0, 0.7)))
-        box_alpha = float(getattr(cfg, "box_alpha", -1.0))
-        if box_alpha >= 0.0:
-            box_col = with_alpha(box_col, box_alpha)
-        draw_list.add_rect_filled(
-            (text_x0 - pad, text_y0 - pad),
-            (text_x0 + text_w + pad, text_y0 + text_h + pad),
-            color_u32(box_col), 4.0,
-        )
+	if not items_to_render:
+		return
 
-    # Shadow first at +1px offset, then the coloured line on top.
-    shadow_col = color_u32((0.0, 0.0, 0.0, 0.85))
+	# A custom override wins; otherwise the theme text colour keeps every widget consistent
+	if icon_style is not None and theme is not None:
+		text_rgba = icon_style.text or theme.text
+		unified = color_u32(text_rgba)
+		items_to_render = [(glyph_type, text, unified, ref) for glyph_type, text, _col, ref in items_to_render]
 
-    cursor_y = text_y0
-    for i, (_kind, txt, col_rgba, font, size_px) in enumerate(entries):
-        # Centre each line within the maximum-width text block.
-        line_x = text_x0 + max(0.0, (text_w - line_widths[i]) / 2.0)
-        col = color_u32(col_rgba)
-        pushed = push_sized(font, size_px)
-        try:
-            draw_list.add_text((line_x + 1, cursor_y + 1), shadow_col, txt)
-            draw_list.add_text((line_x, cursor_y), col, txt)
-        finally:
-            pop_font(pushed)
-        cursor_y += line_heights[i]
-        if i < len(gaps):
-            cursor_y += gaps[i]
+	if style == "capsule":
+		# Design metrics at scale 1.0
+		pad_x = 15.0
+		base_h = 40.0
+		r = float(getattr(cfg, "corner_radius", 8.0) or 8.0)
+		glyph_w = 19.0
+		gap = 8.0
+		base_font_size = float(getattr(cfg, "hud_font_size", 17.0) or 17.0)
+
+		# Measure at base size to recover the design width
+		pushed = push_sized(body_font, base_font_size)
+		legacy_items = [item for item in items_to_render if item[0] != "loop_bars"] or items_to_render
+		design_w = gap * max(0, len(legacy_items) - 1)
+		try:
+			for _g, text, _c, ref in legacy_items:
+				# Preserve the font size implied by an existing saved width
+				design_w += pad_x * 2.0 + glyph_w + text_size(ref).x
+		finally:
+			pop_font(pushed)
+
+		# The stored frame size maps to a content scale factor
+		scale = 1.0
+		if hud_manager is not None:
+			saved_w, saved_h = hud_manager.get_size("fps_counter", design_w, base_h)
+			scale = HudPositionManager.content_scale(saved_w, design_w)
+
+		h = base_h * scale
+		font_size = snap_size(base_font_size * scale)
+		s_glyph_w = glyph_w * scale
+		s_gap = gap * scale
+
+		def _measure(measured_scale: float, measured_font_size: float):
+			measured: list[tuple[str, str, int, float, float]] = []
+			pushed = push_sized(body_font, measured_font_size)
+			try:
+				for glyph_type, text, col, ref in items_to_render:
+					bounds = text_size(text)
+					pill_width = (pad_x * 2.0 + glyph_w + 7.0) * measured_scale + bounds.x
+					measured.append((glyph_type, text, col, bounds.x, pill_width))
+			finally:
+				pop_font(pushed)
+			return measured, sum(item[4] for item in measured) + gap * measured_scale * (len(measured) - 1)
+
+		measured_items, total_w = _measure(scale, font_size)
+		default_x = screen_w - total_w - 16.0
+		default_y = 14.0
+
+		if hud_manager is not None:
+			x, y = hud_manager.get_pos("fps_counter", default_x, default_y, screen_w, screen_h)
+			# Enforce strict boundary clamping so it never clips off-screen
+			if x + total_w > screen_w - 16.0:
+				x = screen_w - total_w - 16.0
+			x = max(16.0, x)
+			hud_manager.set_max_bounds(total_w / scale * 2.5, base_h * 2.5)
+			x, y, total_w, h, changed = hud_manager.handle_interaction(
+				widget_id="fps_counter", x=x, y=y, width=total_w, height=h, interactive=interactive, draw_list=draw_list, label="Watermark",
+				min_w=design_w * 0.6, min_h=base_h * 0.6, reference_size=(design_w * scale, saved_h), reference_edge="top", preserve_aspect=True,
+			)
+			if changed:
+				new_width, _new_height = hud_manager.get_size("fps_counter", design_w * scale, saved_h)
+				new_scale = HudPositionManager.content_scale(new_width, design_w)
+				if new_scale != scale:
+					scale = new_scale
+					h, font_size = base_h * scale, snap_size(base_font_size * scale)
+					s_glyph_w, s_gap = glyph_w * scale, gap * scale
+					measured_items, total_w = _measure(scale, font_size)
+			if x + total_w > screen_w - 16.0:
+				x = screen_w - total_w - 16.0
+			x = max(16.0, x)
+		else:
+			x, y = default_x, default_y
+
+		r *= scale
+		col_bg = color_u32((theme.window_bg[0], theme.window_bg[1], theme.window_bg[2], 1.0)) if theme is not None else color_u32((0.05, 0.06, 0.09, 1.0))
+		col_border = color_u32((1.0, 1.0, 1.0, 0.08))
+
+		glyph_drawers = {
+			"user": draw_user_glyph,
+			"bars": draw_bars_glyph,
+			"loop_bars": draw_bars_glyph,
+			"wifi": draw_wifi_waves_glyph,
+			"waveform": draw_waveform_glyph,
+			"clock": draw_clock_glyph,
+		}
+		cur_x = x
+		for glyph_type, text, col, tw, pw in measured_items:
+			draw_ambient_shadow(draw_list, cur_x, y, pw, h, r, layers=2, spread=2.5, opacity=0.35)
+			draw_list.add_rect_filled((cur_x, y), (cur_x + pw, y + h), col_bg, r)
+			if icon_style is not None:
+				draw_icon_outline(draw_list, cur_x, y, pw, h, r, icon_style)
+			else:
+				draw_list.add_rect((cur_x, y), (cur_x + pw, y + h), col_border, rounding=r, thickness=1.0)
+
+			content_w = s_glyph_w + 7.0 * scale + tw
+			start_x = cur_x + (pw - content_w) * 0.5
+			gx = start_x + s_glyph_w * 0.5 - scale
+			gy = y + h * 0.5
+			glyph_sz = 19.0 * scale
+			draw_glyph = glyph_drawers.get(glyph_type)
+			if glyph_type == "triangle":
+				draw_list.add_triangle_filled((gx, gy - 4.0 * scale), (gx - 3.5 * scale, gy + 3.0 * scale), (gx + 3.5 * scale, gy + 3.0 * scale), col)
+			elif draw_glyph is not None:
+				draw_glyph(draw_list, gx, gy, glyph_sz, col)
+			elif glyph_type == "memory":
+				draw_list.add_rect((gx - 7.0 * scale, gy - 3.5 * scale), (gx + 7.0 * scale, gy + 2.5 * scale), col, rounding=0.7 * scale, thickness=1.2 * scale)
+				for slot in range(3):
+					cell_x = gx + (slot - 1) * 4.0 * scale
+					draw_list.add_rect_filled((cell_x - scale, gy - 1.8 * scale), (cell_x + scale, gy + 0.8 * scale), col)
+				for contact in range(5):
+					pin_x = gx + (contact - 2) * 2.4 * scale
+					draw_list.add_line((pin_x, gy + 2.5 * scale), (pin_x, gy + 4.5 * scale), col, 1.2 * scale)
+			elif glyph_type == "chip":
+				draw_list.add_rect((gx - 5.0 * scale, gy - 4.0 * scale), (gx + 5.0 * scale, gy + 4.0 * scale), col, rounding=1.5 * scale, thickness=1.4 * scale)
+				for pin_index in range(-2, 3):
+					pin_x = gx + pin_index * 2.5 * scale
+					draw_list.add_line((pin_x, gy - 4.0 * scale), (pin_x, gy - 6.0 * scale), col, 1.2 * scale)
+					draw_list.add_line((pin_x, gy + 4.0 * scale), (pin_x, gy + 6.0 * scale), col, 1.2 * scale)
+
+			tx = start_x + s_glyph_w + 7.0 * scale
+			pushed = push_sized(body_font, font_size)
+			try:
+				ts_y = text_size(text).y
+				ty = y + (h - ts_y) * 0.5
+				draw_list.add_text((tx, ty), col, text)
+			finally:
+				pop_font(pushed)
+
+			cur_x += pw + s_gap
+
+		return
 
 
 __all__ = ["draw_fps_counter"]

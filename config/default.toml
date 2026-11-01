@@ -1,5 +1,5 @@
 [meta]
-schema_version = 59
+schema_version = 60
 remove_on_upgrade = [
     "triggerbot.respect_walls",
     "anti_detection.disable_writes_in_demo",
@@ -25,6 +25,25 @@ remove_on_upgrade = [
     "visuals.chams.depth_strength",
     "visuals.chams.lateral_strength",
     "visuals.skeleton.head_outline_offset_right_effective",
+    "fps_counter.position",
+    "fps_counter.margin_x",
+    "fps_counter.margin_y",
+    "fps_counter.font_size",
+    "fps_counter.text_alpha",
+    "fps_counter.ping_font_size",
+    "fps_counter.ping_alpha",
+    "fps_counter.jitter_font_size",
+    "fps_counter.jitter_alpha",
+    "fps_counter.box_enabled",
+    "fps_counter.box_alpha",
+    "fps_counter.box_padding",
+    "fps_counter.sub_font_size",
+    "fps_counter.text_color",
+    "fps_counter.ping_color",
+    "fps_counter.jitter_color",
+    "fps_counter.box_color",
+    "overlay.only_when_cs2_focused",
+    "general.menu_show_advanced_default",
 ]
 reset_on_upgrade = [
     "triggerbot.head_only",
@@ -135,7 +154,6 @@ reset_on_upgrade = [
     "bhop.humanize_skip_max",
     "bhop.skip_resume_delay_ms",
     "general.ui_theme",
-    "general.menu_show_advanced_default",
     "general.menu_window_width",
     "general.menu_window_height",
     "rapidfire.hotkey",
@@ -178,19 +196,24 @@ target_fps = 120
 start_menu_visible = true
 autosave = true
 autosave_interval_sec = 1.0
-focus_cs2_on_launch = false
+focus_cs2_on_launch = true
 ui_scale = 1.0
 menu_external_window = false
 qt_menu_enabled = true
 ui_theme = "slate"
-menu_show_advanced_default = false
-menu_window_width = 1460
-menu_window_height = 800
-menu_pre_max_width = 1460
-menu_pre_max_height = 800
+custom_theme_color = [
+    0.659,
+    0.333,
+    0.969,
+    1.0,
+]
+menu_window_width = 1415
+menu_window_height = 792
+menu_pre_max_width = 1328
+menu_pre_max_height = 786
 hide_terminal = true
 master_enabled = true
-last_panel_key = "settings"
+last_panel_key = "keybinds"
 
 [visuals]
 team_esp = false
@@ -250,7 +273,8 @@ head_outline_color = [
 ]
 
 [visuals.chams]
-enabled = false
+enabled = true
+mode = "vpk"
 opacity = 0.85
 tri_count = 3000
 quality = "medium"
@@ -337,6 +361,8 @@ shoulder_sphere = 0.045
 
 [visuals.name]
 enabled = true
+weapon_enabled = true
+weapon_size = 22.0
 hotkey_toggle = ""
 color = [
     1.0,
@@ -384,7 +410,7 @@ color = [
     1.0,
     1.0,
     1.0,
-    0.4,
+    1.0,
 ]
 
 [visuals.crosshair]
@@ -453,7 +479,7 @@ position = [
     16.0,
 ]
 size_fraction = 0.0
-size = 200.0
+size = 266.0
 range = 1000.0
 opacity = 0.85
 show_teammates = false
@@ -490,6 +516,7 @@ teammate_color = [
 
 [awareness]
 enabled = false
+hotkey_toggle = "f4"
 cone_degrees = 8.0
 max_distance = 2500.0
 fade_speed = 4.0
@@ -504,17 +531,26 @@ rear_only = true
 rear_fov_deg = 150.0
 
 [triggerbot]
-enabled = false
+enabled = true
 hotkey = ""
-hotkey_toggle = ""
+hotkey_toggle = "f2"
 head_only = false
-allow_scoped = true
-delay_ms = 0
-delay_jitter_ms = 0
-min_delay_ms = 0
+scoped_require_scope = true
+fire_condition = "always"
+allow_rifles = true
+allow_smgs = true
+allow_shotguns = true
+allow_snipers = true
+allow_pistols = true
+allow_lmg = true
+allow_grenades = false
+allow_knife_zeus = false
+delay_ms = 15
+delay_jitter_ms = 7
+min_delay_ms = 14
 fov_deg = 0.5
 skeleton_fov_deg = 0.5
-refire_cooldown_ms = 200
+refire_cooldown_ms = 33
 wh_compliant = true
 scoped_band_mode = "both_scaled"
 scoped_band_multiplier = 0.3
@@ -528,20 +564,41 @@ distance_bands = [
 ]
 mode = "toggle"
 version = "feedback"
-feedback_confirm_ms = 100
-feedback_resume_ms = 100
+feedback_confirm_ms = 34
+feedback_resume_ms = 51
 
 [aimbot]
 enabled = false
 hotkey = ""
 hotkey_toggle = ""
 mode = "smooth"
-smooth_steps = 6
-jitter_deg = 0.05
+smooth_steps = 7
+jitter_deg = 0.14
 max_fov_deg = 30.0
 bone_priority = "head"
 humanize_path = true
-curvature = 0.3
+curvature = 0.9
+visibility = "visible"
+visible_grace_ms = 250.0
+zigzag_waves = 4
+speed_variance = 0.25
+overshoot_pct = 3.4
+adaptive_steps = true
+reaction_min_ms = 56.0
+reaction_max_ms = 138.0
+switch_delay_ms = 122.0
+tremor_deg = 0.07
+
+[recoil_control]
+enabled = false
+hotkey = ""
+hotkey_toggle = "f3"
+strength_x = 1.0
+strength_y = 1.0
+start_bullet = 2
+sensitivity = 0.0
+
+[recoil_control.weapon_profiles]
 
 [rapidfire]
 enabled = false
@@ -549,6 +606,9 @@ hotkey = ""
 hotkey_toggle = ""
 cps = 13.0
 jitter_pct = 0.25
+pattern = "continuous"
+burst_size = 3
+burst_pause_ms = 150.0
 
 [autopistol]
 enabled = false
@@ -559,61 +619,41 @@ jitter_pct = 0.2
 
 [bhop]
 enabled = false
-hotkey = "space"
+hotkey = "x"
 hotkey_toggle = ""
-min_gap_ms = 80
+min_gap_ms = 15
+release_settle_ms = 25
 delay_jitter_ms = 8
+buffer_ms = 40
+gravity = 800.0
 humanize = true
 humanize_skip_min = 3
 humanize_skip_max = 15
-skip_resume_delay_ms = 1000
+skip_resume_delay_ms = 60
+debug_log = false
 
 [fps_counter]
 enabled = true
 hotkey_toggle = ""
-position = "top_left"
-margin_x = 12
-margin_y = 12
 show_fps = true
-show_ping = false
+show_ping = true
+show_latency = true
+show_ram = true
+show_cpu = true
+show_time = false
+show_brand = false
+brand_text = "msmesh"
 show_jitter = false
-font_size = 22
-text_color = [
-    0.0,
-    0.85,
-    0.85,
-    1.0,
-]
-text_alpha = 1.0
-ping_font_size = 16
-ping_color = [
-    0.4,
-    0.85,
-    0.4,
-    1.0,
-]
-ping_alpha = 1.0
-jitter_font_size = 16
-jitter_color = [
-    0.4,
-    0.85,
-    0.4,
-    1.0,
-]
-jitter_alpha = 1.0
-box_enabled = true
-box_color = [
-    0.0,
-    0.0,
-    0.0,
-    1.0,
-]
-box_alpha = 1.0
-box_padding = 14
-sub_font_size = 16
+show_overlay_fps = false
 
 [overlay]
 colorkey_fallback = false
+vsync = false
+render_device = "gpu:7606ceee-fcac-11f0-97fb-010101010000"
+render_profile = "low_latency"
+
+[overlay.render_profiles]
+"gpu:7606ceee-fcac-11f0-97fb-010101010000" = "low_latency"
 
 [anti_detection]
 hide_overlay_from_capture = false
@@ -629,3 +669,170 @@ read_obfuscator_enabled = false
 read_obfuscator_bogus_per_real = 4
 window_class_masquerade_enabled = false
 window_class_masquerade_target = "Explorer"
+
+[event_visuals]
+enabled = true
+theme = "auto"
+custom_color = []
+corner_radius = 6.0
+bloom_intensity = 0.35
+shadow_intensity = 0.55
+icon_outline_width = 1.5
+icon_accent_color = []
+icon_text_color = []
+max_events = 6
+event_duration_sec = 3.5
+font_size = 13.0
+show_c4_timer = true
+show_spectators = true
+show_hotkeys = true
+show_status_pills = true
+filter_combat = true
+filter_modules = true
+filter_c4 = true
+filter_tactical = true
+filter_system = true
+edit_mode = false
+edit_lock = false
+ev_hit_enabled = true
+ev_hit_glyph = "badge_hit"
+ev_hit_label = ""
+ev_hit_color = []
+ev_miss_enabled = true
+ev_miss_glyph = "badge_miss"
+ev_miss_label = ""
+ev_miss_color = []
+ev_kill_enabled = true
+ev_kill_glyph = "badge_kill"
+ev_kill_label = ""
+ev_kill_color = []
+ev_headshot_enabled = true
+ev_headshot_glyph = "badge_headshot"
+ev_headshot_label = ""
+ev_headshot_color = []
+ev_knife_enabled = true
+ev_knife_glyph = "badge_kill"
+ev_knife_label = ""
+ev_knife_color = []
+ev_zeus_enabled = true
+ev_zeus_glyph = "bolt"
+ev_zeus_label = ""
+ev_zeus_color = []
+ev_triggerbot_enabled = true
+ev_triggerbot_glyph = "badge_hit"
+ev_triggerbot_label = ""
+ev_triggerbot_color = []
+ev_bhop_enabled = true
+ev_bhop_glyph = "bunny"
+ev_bhop_label = ""
+ev_bhop_color = []
+ev_bomb_plant_enabled = true
+ev_bomb_plant_glyph = "bomb"
+ev_bomb_plant_label = ""
+ev_bomb_plant_color = []
+ev_bomb_defusing_enabled = true
+ev_bomb_defusing_glyph = "bomb"
+ev_bomb_defusing_label = ""
+ev_bomb_defusing_color = []
+ev_bomb_defused_enabled = true
+ev_bomb_defused_glyph = "bomb"
+ev_bomb_defused_label = ""
+ev_bomb_defused_color = []
+ev_bomb_exploded_enabled = true
+ev_bomb_exploded_glyph = "bomb"
+ev_bomb_exploded_label = ""
+ev_bomb_exploded_color = []
+ev_spectator_new_enabled = true
+ev_spectator_new_glyph = "user"
+ev_spectator_new_label = ""
+ev_spectator_new_color = []
+ev_rear_threat_enabled = true
+ev_rear_threat_glyph = "shield"
+ev_rear_threat_label = ""
+ev_rear_threat_color = []
+ev_offsets_updated_enabled = true
+ev_offsets_updated_glyph = "wrench"
+ev_offsets_updated_label = ""
+ev_offsets_updated_color = []
+ev_hotkey_toggled_enabled = true
+ev_hotkey_toggled_glyph = "bolt"
+ev_hotkey_toggled_label = ""
+ev_hotkey_toggled_color = []
+ev_config_loaded_enabled = true
+ev_config_loaded_glyph = "wrench"
+ev_config_loaded_label = ""
+ev_config_loaded_color = []
+
+[event_sounds]
+enabled = true
+volume = 0.7
+ui_order = [
+    "hit",
+    "kill",
+    "one_tap",
+    "headshot_hit",
+    "headshot_kill",
+    "miss",
+    "bomb",
+    "spectator",
+    "system",
+    "toggle",
+]
+hit_enabled = true
+kill_enabled = true
+headshot_enabled = true
+headshot_hit_enabled = true
+one_tap_enabled = true
+headshot_kill_enabled = true
+miss_enabled = false
+bomb_enabled = true
+spectator_enabled = false
+system_enabled = false
+toggle_enabled = false
+hit_file = "neverlose.wav"
+headshot_hit_file = "stapler.wav"
+kill_file = "sonic.wav"
+one_tap_file = "bubble.wav"
+headshot_kill_file = "plasmablaster.wav"
+miss_file = "bubble.wav"
+bomb_file = "Beep1.wav"
+spectator_file = "bell.wav"
+system_file = "reminder.wav"
+toggle_file = "mcbow.wav"
+hit_volume = 1.0
+headshot_hit_volume = 1.0
+kill_volume = 1.0
+one_tap_volume = 1.0
+headshot_kill_volume = 1.0
+miss_volume = 1.0
+bomb_volume = 1.0
+spectator_volume = 1.0
+system_volume = 1.0
+toggle_volume = 1.0
+
+[hud_positions]
+status_pills = [
+    8,
+    800,
+]
+status_pills_size = [
+    104,
+    264,
+]
+fps_counter = [
+    1544,
+    16,
+]
+fps_counter_size = [
+    360,
+    24,
+]
+event_feed = [
+    16,
+    296,
+]
+event_feed_size = [
+    270,
+    140,
+]
+event_feed_anchor = "top"

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from string import Template
 
 
-# Kept public for the help popup's runtime font measurement.
+# Kept public for the help popup's runtime font measurement
 DISPLAY_PX = 23
 H1_PX = 27
 H2_PX = 15
@@ -13,152 +13,156 @@ CAPTION_PX = 11
 
 
 PALETTES: dict[str, dict[str, str]] = {
-    "midnight": {
-        "bg_app": "#0c0f14",
-        "bg_sidebar": "#10141b",
-        "surface_1": "#151a22",
-        "surface_2": "#1b212b",
-        "surface_hi": "#252d38",
-        "accent": "#83a9c0",
-        "accent_hi": "#aac5d5",
-        "accent_dim": "#58798d",
-        "accent_soft": "rgba(131, 169, 192, 32)",
-        "safe": "#79b39a",
-        "safe_soft": "rgba(121, 179, 154, 28)",
-        "warn": "#d0a064",
-        "warn_soft": "rgba(208, 160, 100, 28)",
-        "danger": "#d27676",
-        "danger_soft": "rgba(210, 118, 118, 28)",
-        "status_ok": "#79b39a",
-        "status_bad": "#d27676",
-        "status_info": "#8eafc2",
-        "theme_dot": "#83a9c0",
-        "text": "#eef1f4",
-        "text_dim": "#a5adb9",
-        "text_mute": "#7b8695",
-        "border": "#27303b",
-        "divider": "#1e252e",
-        "shadow": "#050608",
-    },
-    "slate": {
-        "bg_app": "#12161b",
-        "bg_sidebar": "#161b22",
-        "surface_1": "#1a2028",
-        "surface_2": "#222a34",
-        "surface_hi": "#2c3541",
-        "accent": "#8eb1c5",
-        "accent_hi": "#b4ccda",
-        "accent_dim": "#627f91",
-        "accent_soft": "rgba(142, 177, 197, 34)",
-        "safe": "#82b69e",
-        "safe_soft": "rgba(130, 182, 158, 28)",
-        "warn": "#d5a469",
-        "warn_soft": "rgba(213, 164, 105, 28)",
-        "danger": "#d67b7b",
-        "danger_soft": "rgba(214, 123, 123, 28)",
-        "status_ok": "#82b69e",
-        "status_bad": "#d67b7b",
-        "status_info": "#91b2c5",
-        "theme_dot": "#8eb1c5",
-        "text": "#f0f2f5",
-        "text_dim": "#aeb5bf",
-        "text_mute": "#7f8a98",
-        "border": "#2d3641",
-        "divider": "#232a33",
-        "shadow": "#090b0e",
-    },
-    "daylight": {
-        "bg_app": "#f3f1ec",
-        "bg_sidebar": "#ece9e2",
-        "surface_1": "#fbfaf7",
-        "surface_2": "#f0ede7",
-        "surface_hi": "#e4e0d8",
-        "accent": "#426d86",
-        "accent_hi": "#31566d",
-        "accent_dim": "#7897a9",
-        "accent_soft": "rgba(66, 109, 134, 24)",
-        "safe": "#397c61",
-        "safe_soft": "rgba(57, 124, 97, 22)",
-        "warn": "#9a682e",
-        "warn_soft": "rgba(154, 104, 46, 22)",
-        "danger": "#ad4f4f",
-        "danger_soft": "rgba(173, 79, 79, 22)",
-        "status_ok": "#397c61",
-        "status_bad": "#ad4f4f",
-        "status_info": "#426d86",
-        "theme_dot": "#426d86",
-        "text": "#1b2229",
-        "text_dim": "#56616c",
-        "text_mute": "#626d78",
-        "border": "#d6d1c8",
-        "divider": "#e3dfd7",
-        "shadow": "#b8b2a8",
-    },
+	"midnight": {
+		"bg_app": "#0c0f14",
+		"bg_sidebar": "#10141b",
+		"surface_1": "#151a22",
+		"surface_2": "#1b212b",
+		"surface_hi": "#252d38",
+		"accent": "#83a9c0",
+		"accent_hi": "#aac5d5",
+		"accent_dim": "#58798d",
+		"accent_soft": "rgba(131, 169, 192, 32)",
+		"safe": "#79b39a",
+		"safe_soft": "rgba(121, 179, 154, 28)",
+		"warn": "#d0a064",
+		"warn_soft": "rgba(208, 160, 100, 28)",
+		"danger": "#d27676",
+		"danger_soft": "rgba(210, 118, 118, 28)",
+		"status_ok": "#79b39a",
+		"status_bad": "#d27676",
+		"status_info": "#8eafc2",
+		"theme_dot": "#83a9c0",
+		"text": "#eef1f4",
+		"text_dim": "#a5adb9",
+		"text_mute": "#7b8695",
+		"border": "#27303b",
+		"divider": "#1e252e",
+		"shadow": "#050608",
+	},
+	"slate": {
+		"bg_app": "#12161b",
+		"bg_sidebar": "#161b22",
+		"surface_1": "#1a2028",
+		"surface_2": "#222a34",
+		"surface_hi": "#2c3541",
+		"accent": "#8eb1c5",
+		"accent_hi": "#b4ccda",
+		"accent_dim": "#627f91",
+		"accent_soft": "rgba(142, 177, 197, 34)",
+		"safe": "#82b69e",
+		"safe_soft": "rgba(130, 182, 158, 28)",
+		"warn": "#d5a469",
+		"warn_soft": "rgba(213, 164, 105, 28)",
+		"danger": "#d67b7b",
+		"danger_soft": "rgba(214, 123, 123, 28)",
+		"status_ok": "#82b69e",
+		"status_bad": "#d67b7b",
+		"status_info": "#91b2c5",
+		"theme_dot": "#8eb1c5",
+		"text": "#f0f2f5",
+		"text_dim": "#aeb5bf",
+		"text_mute": "#7f8a98",
+		"border": "#2d3641",
+		"divider": "#232a33",
+		"shadow": "#090b0e",
+	},
+	"daylight": {
+		"bg_app": "#f3f1ec",
+		"bg_sidebar": "#ece9e2",
+		"surface_1": "#fbfaf7",
+		"surface_2": "#f0ede7",
+		"surface_hi": "#e4e0d8",
+		"accent": "#426d86",
+		"accent_hi": "#31566d",
+		"accent_dim": "#7897a9",
+		"accent_soft": "rgba(66, 109, 134, 24)",
+		"safe": "#397c61",
+		"safe_soft": "rgba(57, 124, 97, 22)",
+		"warn": "#9a682e",
+		"warn_soft": "rgba(154, 104, 46, 22)",
+		"danger": "#ad4f4f",
+		"danger_soft": "rgba(173, 79, 79, 22)",
+		"status_ok": "#397c61",
+		"status_bad": "#ad4f4f",
+		"status_info": "#426d86",
+		"theme_dot": "#426d86",
+		"text": "#1b2229",
+		"text_dim": "#56616c",
+		"text_mute": "#626d78",
+		"border": "#d6d1c8",
+		"divider": "#e3dfd7",
+		"shadow": "#b8b2a8",
+	},
 }
 
 
 @dataclass(frozen=True)
 class UIMetrics:
-    """Geometry that follows accessibility scale without becoming unwieldy."""
+	"""Geometry that follows accessibility scale without becoming unwieldy."""
 
-    scale: float
-    density: float
-    titlebar_height: int
-    sidebar_width: int
-    footer_height: int
-    nav_icon_size: int
-    header_button_height: int
-    window_button_width: int
-    content_max_width: int
-    resize_margin: int
+	scale: float
+	density: float
+	titlebar_height: int
+	sidebar_width: int
+	footer_height: int
+	nav_icon_size: int
+	header_button_height: int
+	window_button_width: int
+	content_max_width: int
+	resize_margin: int
+
+
+def clamp_scale(scale: float) -> float:
+	'''Clamp a UI scale to the supported 0.5–2.5 range.'''
+	return min(2.5, max(0.5, float(scale or 1.0)))
 
 
 def metrics(scale: float = 1.0) -> UIMetrics:
-    """Return shell geometry for the configured UI scale."""
-    scale = min(2.5, max(0.5, float(scale or 1.0)))
-    density = min(1.55, max(0.82, 0.72 + scale * 0.30))
+	"""Return shell geometry for the configured UI scale."""
+	scale = clamp_scale(scale)
+	density = min(1.55, max(0.82, 0.72 + scale * 0.30))
 
-    def dp(value: int) -> int:
-        return max(1, int(round(value * density)))
+	def dp(value: int) -> int:
+		return max(1, int(round(value * density)))
 
-    high_scale_sidebar_extra = max(
-        0, int(round((scale - 1.5) * 28))
-    )
-    return UIMetrics(
-        scale=scale,
-        density=density,
-        titlebar_height=dp(60),
-        sidebar_width=dp(232) + high_scale_sidebar_extra,
-        footer_height=dp(40),
-        nav_icon_size=dp(18),
-        header_button_height=dp(32),
-        window_button_width=dp(42),
-        content_max_width=dp(1080),
-        resize_margin=dp(6),
-    )
+	high_scale_sidebar_extra = max(0, int(round((scale - 1.5) * 28)))
+	return UIMetrics(
+		scale=scale,
+		density=density,
+		titlebar_height=dp(60),
+		sidebar_width=dp(232) + high_scale_sidebar_extra,
+		footer_height=dp(40),
+		nav_icon_size=dp(18),
+		header_button_height=dp(32),
+		window_button_width=dp(42),
+		content_max_width=dp(1080),
+		resize_margin=dp(10),
+	)
 
 
 def stylesheet(theme_name: str, scale: float = 1.0) -> str:
-    """Render the application stylesheet for a named palette and scale."""
-    scale = min(2.5, max(0.5, float(scale or 1.0)))
-    palette = PALETTES.get(theme_name, PALETTES["slate"])
+	"""Render the application stylesheet for a named palette and scale."""
+	scale = clamp_scale(scale)
+	palette = PALETTES.get(theme_name, PALETTES["slate"])
 
-    def px(value: float) -> int:
-        return max(1, int(round(value * scale)))
+	def px(value: float) -> int:
+		return max(1, int(round(value * scale)))
 
-    tokens = {
-        **palette,
-        "display_px": px(DISPLAY_PX),
-        "h1_px": px(H1_PX),
-        "h2_px": px(H2_PX),
-        "body_px": px(BODY_PX),
-        "caption_px": px(CAPTION_PX),
-        "nav_px": px(13),
-        "status_px": px(12),
-        "control_radius": max(5, px(7)),
-        "card_radius": max(8, px(11)),
-    }
-    return _QSS.substitute(tokens)
+	tokens = {
+		**palette,
+		"display_px": px(DISPLAY_PX),
+		"h1_px": px(H1_PX),
+		"h2_px": px(H2_PX),
+		"body_px": px(BODY_PX),
+		"offset_action_px": px(17),
+		"caption_px": px(CAPTION_PX),
+		"nav_px": px(13),
+		"status_px": px(12),
+		"control_radius": max(5, px(7)),
+		"card_radius": max(8, px(11)),
+	}
+	return _QSS.substitute(tokens)
 
 
 _QSS = Template(r"""
@@ -475,6 +479,18 @@ QLabel#Caption {
     padding: 2px 6px;
 }
 
+#RiskBadge[risk="safe"], #RiskBadge[risk="low"] {
+    background: $accent_soft;
+    border-color: $accent;
+    color: $accent;
+}
+
+#RiskBadge[risk="critical"] {
+    background: $danger_soft;
+    border-color: $danger;
+    color: $danger;
+}
+
 #RiskBadge[risk="medium"] {
     background: $warn_soft;
     border-color: $warn;
@@ -491,18 +507,42 @@ QLabel#Caption {
     background: transparent;
 }
 
-QToolButton#FeatureCardCollapse {
+#ResetSurface {
+    background: $surface_1;
+    border: 1px solid $border;
+    border-radius: 12px;
+}
+
+#ResetTitle {
+    color: $text;
+    font-size: ${h2_px}px;
+    font-weight: 600;
+}
+
+#ResetBody { color: $text_dim; }
+#ResetNote { color: $text_mute; font-size: ${caption_px}px; }
+#ResetMark { background: $accent_soft; border-radius: 10px; }
+#ResetClose { background: transparent; border: none; padding: 0; color: $text_mute; font-size: 22px; }
+#ResetClose:hover { background: $surface_2; color: $text; border-radius: 6px; }
+#ResetAccept { background: $accent_soft; border: 1px solid $accent_dim; color: $text; }
+#ResetAccept:hover { background: $surface_hi; border-color: $accent; }
+
+QToolButton#FeatureCardCollapse, QToolButton#SettingsReset {
     background: transparent;
-    border: none;
-    border-radius: 5px;
+    border: 1px solid $border;
+    border-radius: 12px;
     color: $text_mute;
     min-height: 24px;
     min-width: 24px;
+    max-height: 24px;
+    max-width: 24px;
     padding: 0;
 }
 
 QToolButton#FeatureCardCollapse:hover,
-QToolButton#FeatureCardCollapse:focus {
+QToolButton#FeatureCardCollapse:focus,
+QToolButton#SettingsReset:hover,
+QToolButton#SettingsReset:focus {
     background: $surface_2;
     color: $text;
 }
@@ -664,6 +704,11 @@ QPushButton {
     padding: 7px 13px;
 }
 
+QPushButton#OffsetsUpdateBtn, QPushButton#HudEditModeBtn {
+    font-size: ${offset_action_px}px;
+    font-weight: 600;
+}
+
 QPushButton:hover {
     background: $surface_hi;
     border-color: $accent_dim;
@@ -747,6 +792,10 @@ QSpinBox:disabled, QDoubleSpinBox:disabled {
 QComboBox::drop-down {
     border: none;
     width: 24px;
+}
+
+QComboBox {
+    padding-right: 34px;
 }
 
 QComboBox::down-arrow {
@@ -846,6 +895,49 @@ QGroupBox::title {
     color: transparent;
 }
 
+/* Renderer preferences keep the app typography while separating selection from live status. */
+#RendererCard {
+    background: $surface_1;
+    border: 1px solid $border;
+    border-radius: $card_radius;
+}
+#RendererFieldLabel, #RendererActiveName {
+    color: $text;
+    font-weight: 600;
+}
+#RendererFieldHint, #RendererEyebrow {
+    color: $text_mute;
+    font-size: ${caption_px}px;
+}
+#RendererEyebrow {
+    font-weight: 600;
+}
+#RendererFieldNote {
+    color: $text_dim;
+    font-size: ${caption_px}px;
+}
+#RendererActivePanel {
+    background: $surface_2;
+    border: 1px solid $border;
+    border-radius: $control_radius;
+    margin-top: 9px;
+}
+#RendererStatus {
+    font-size: ${caption_px}px;
+    padding: 3px 7px;
+    border-radius: 4px;
+    color: $text_mute;
+    background: $surface_1;
+}
+#RendererStatus[tone="good"] { color: $safe; background: $safe_soft; }
+#RendererStatus[tone="warning"] { color: $warn; background: $warn_soft; }
+#RendererPending {
+    color: $warn;
+    font-size: ${caption_px}px;
+    border-top: 1px solid $border;
+    padding-top: 10px;
+}
+
 /* Setting rows and selectors */
 #LabeledRow, #ChoiceRow, #ComboRow, #KeybindRow {
     background: transparent;
@@ -891,7 +983,7 @@ QComboBox#ChoiceCombo:hover, QComboBox#ChoiceCombo:focus {
 
 #SegmentedButton {
     background: transparent;
-    border: none;
+    border: 1px solid $border;
     border-radius: $control_radius;
     color: $text_dim;
     padding: 6px 13px;
@@ -1010,10 +1102,11 @@ ToggleSwitch {
 
 #BandsChevron, #HeadAdvChevron {
     background: transparent;
-    border: none;
+    border: 1px solid $border;
+    border-radius: 6px;
     color: $text_dim;
     font-weight: 600;
-    padding: 5px 0;
+    padding: 5px 8px;
     text-align: left;
 }
 
@@ -1022,14 +1115,10 @@ ToggleSwitch {
     color: $accent_hi;
 }
 
-#BandsReset, #BandsRemove {
+#BandsRemove {
     background: transparent;
     color: $text_mute;
     padding: 5px 9px;
-}
-
-#BandsReset:hover {
-    color: $text;
 }
 
 #BandsRemove:hover {

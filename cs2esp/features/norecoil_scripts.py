@@ -1,289 +1,555 @@
 """
-No-recoil script generator for supported mouse/keyboard vendors.
-
-Logitech gets a G HUB Lua script; every other supported vendor uses the
-shared AHK v2 generator. Public callers use VENDORS, build_script(vendor_id),
-and suggested_filename(vendor_id).
+No-recoil script generator for supported mouse/keyboard vendors. Logitech gets a G HUB Lua script; every other supported vendor uses the shared AHK v2
+generator. Public callers use VENDORS, build_script(vendor_id), and suggested_filename(vendor_id).
 """
 
 from typing import Callable, NamedTuple
 
 
-# Per-bullet (dx, dy, delay_ms) compensation vectors calibrated for sensitivity 1.0/m_pitch 0.022; scripts play them while LMB is held and reset on release.
+# Per-bullet (dx, dy, delay_ms) compensation vectors calibrated for sensitivity 1.0/m_pitch 0.022; scripts play them while LMB is held and reset on release
 
 Pattern = list[tuple[int, int, int]]  # (dx, dy, delay_ms)
 
 
 PATTERNS: dict[str, Pattern] = {}
 
-# Rifles: AK-47, RPM 600 (100 ms/shot), 30-round mag. Vertical climb shots 2-7, left drift 5-9, right drift 10-16, zigzag tail.
+# Rifles: AK-47, RPM 600 (100 ms/shot), 30-round mag. Vertical climb shots 2-7, left drift 5-9, right drift 10-16, zigzag tail
 PATTERNS["ak47"] = [
-    ( 0, 0, 100),
-    ( 0, 55, 100), ( 0, 68, 100), ( -2, 78, 100),
-    ( -5, 85, 100), ( -8, 86, 100), (-12, 82, 100),
-    (-15, 72, 100), (-15, 56, 100), (-12, 40, 100),
-    ( -6, 28, 100), ( 2, 22, 100), ( 10, 18, 100),
-    ( 18, 14, 100), ( 24, 10, 100), ( 26, 6, 100),
-    ( 24, 2, 100), ( 18, -2, 100), ( 8, -2, 100),
-    ( -4, 0, 100), (-14, 4, 100), (-22, 6, 100),
-    (-26, 4, 100), (-24, 0, 100), (-16, -2, 100),
-    ( -6, 0, 100), ( 6, 2, 100), ( 16, 2, 100),
-    ( 22, 0, 100), ( 22, -2, 100),
+	(0, 0, 100),
+	(0, 55, 100),
+	(0, 68, 100),
+	(-2, 78, 100),
+	(-5, 85, 100),
+	(-8, 86, 100),
+	(-12, 82, 100),
+	(-15, 72, 100),
+	(-15, 56, 100),
+	(-12, 40, 100),
+	(-6, 28, 100),
+	(2, 22, 100),
+	(10, 18, 100),
+	(18, 14, 100),
+	(24, 10, 100),
+	(26, 6, 100),
+	(24, 2, 100),
+	(18, -2, 100),
+	(8, -2, 100),
+	(-4, 0, 100),
+	(-14, 4, 100),
+	(-22, 6, 100),
+	(-26, 4, 100),
+	(-24, 0, 100),
+	(-16, -2, 100),
+	(-6, 0, 100),
+	(6, 2, 100),
+	(16, 2, 100),
+	(22, 0, 100),
+	(22, -2, 100),
 ]
 
-# M4A4, RPM 666 (90 ms/shot), 30 mag. ~30% weaker vertical than AK; sideways drift comparable.
+# M4A4, RPM 666 (90 ms/shot), 30 mag. ~30% weaker vertical than AK; sideways drift comparable
 PATTERNS["m4a4"] = [
-    ( 0, 0, 90),
-    ( 0, 38, 90), ( 0, 48, 90), ( -1, 56, 90),
-    ( -3, 60, 90), ( -6, 60, 90), ( -9, 56, 90),
-    (-11, 48, 90), (-11, 36, 90), ( -8, 26, 90),
-    ( -3, 20, 90), ( 4, 16, 90), ( 11, 12, 90),
-    ( 16, 8, 90), ( 20, 4, 90), ( 20, 0, 90),
-    ( 16, -2, 90), ( 8, -2, 90), ( -2, 0, 90),
-    (-10, 2, 90), (-16, 4, 90), (-20, 4, 90),
-    (-20, 2, 90), (-14, -1, 90), ( -6, 0, 90),
-    ( 4, 2, 90), ( 12, 2, 90), ( 18, 0, 90),
-    ( 18, -2, 90), ( 14, -2, 90),
+	(0, 0, 90),
+	(0, 38, 90),
+	(0, 48, 90),
+	(-1, 56, 90),
+	(-3, 60, 90),
+	(-6, 60, 90),
+	(-9, 56, 90),
+	(-11, 48, 90),
+	(-11, 36, 90),
+	(-8, 26, 90),
+	(-3, 20, 90),
+	(4, 16, 90),
+	(11, 12, 90),
+	(16, 8, 90),
+	(20, 4, 90),
+	(20, 0, 90),
+	(16, -2, 90),
+	(8, -2, 90),
+	(-2, 0, 90),
+	(-10, 2, 90),
+	(-16, 4, 90),
+	(-20, 4, 90),
+	(-20, 2, 90),
+	(-14, -1, 90),
+	(-6, 0, 90),
+	(4, 2, 90),
+	(12, 2, 90),
+	(18, 0, 90),
+	(18, -2, 90),
+	(14, -2, 90),
 ]
 
-# M4A1-S, RPM 600 (100 ms), 20-round mag, tighter pattern than M4A4.
+# M4A1-S, RPM 600 (100 ms), 20-round mag, tighter pattern than M4A4
 PATTERNS["m4a1s"] = [
-    ( 0, 0, 100),
-    ( 0, 34, 100), ( 0, 44, 100), ( -1, 52, 100),
-    ( -2, 56, 100), ( -4, 56, 100), ( -7, 52, 100),
-    (-10, 44, 100), (-10, 32, 100), ( -6, 22, 100),
-    ( -2, 16, 100), ( 4, 14, 100), ( 10, 10, 100),
-    ( 14, 6, 100), ( 16, 2, 100), ( 14, 0, 100),
-    ( 10, -2, 100), ( 4, -2, 100), ( -2, 0, 100),
-    ( -8, 2, 100),
+	(0, 0, 100),
+	(0, 34, 100),
+	(0, 44, 100),
+	(-1, 52, 100),
+	(-2, 56, 100),
+	(-4, 56, 100),
+	(-7, 52, 100),
+	(-10, 44, 100),
+	(-10, 32, 100),
+	(-6, 22, 100),
+	(-2, 16, 100),
+	(4, 14, 100),
+	(10, 10, 100),
+	(14, 6, 100),
+	(16, 2, 100),
+	(14, 0, 100),
+	(10, -2, 100),
+	(4, -2, 100),
+	(-2, 0, 100),
+	(-8, 2, 100),
 ]
 
-# FAMAS (RPM 666 \u2192 90 ms, 25 mag).
+# FAMAS (RPM 666 -> 90 ms, 25 mag)
 PATTERNS["famas"] = [
-    ( 0, 0, 90),
-    ( 0, 36, 90), ( -1, 50, 90), ( -3, 60, 90),
-    ( -6, 62, 90), ( -9, 56, 90), (-11, 44, 90),
-    ( -9, 30, 90), ( -4, 20, 90), ( 2, 16, 90),
-    ( 8, 14, 90), ( 14, 10, 90), ( 18, 6, 90),
-    ( 20, 2, 90), ( 16, -2, 90), ( 8, -2, 90),
-    ( -2, 0, 90), (-10, 2, 90), (-16, 2, 90),
-    (-18, 1, 90), (-14, -1, 90), ( -6, 0, 90),
-    ( 4, 2, 90), ( 12, 1, 90), ( 16, -1, 90),
+	(0, 0, 90),
+	(0, 36, 90),
+	(-1, 50, 90),
+	(-3, 60, 90),
+	(-6, 62, 90),
+	(-9, 56, 90),
+	(-11, 44, 90),
+	(-9, 30, 90),
+	(-4, 20, 90),
+	(2, 16, 90),
+	(8, 14, 90),
+	(14, 10, 90),
+	(18, 6, 90),
+	(20, 2, 90),
+	(16, -2, 90),
+	(8, -2, 90),
+	(-2, 0, 90),
+	(-10, 2, 90),
+	(-16, 2, 90),
+	(-18, 1, 90),
+	(-14, -1, 90),
+	(-6, 0, 90),
+	(4, 2, 90),
+	(12, 1, 90),
+	(16, -1, 90),
 ]
 
-# Galil AR, RPM 666 (90 ms), 35 mag. More horizontal spread than AK, slightly lower peak pull.
+# Galil AR, RPM 666 (90 ms), 35 mag. More horizontal spread than AK, slightly lower peak pull
 PATTERNS["galil"] = [
-    ( 0, 0, 90),
-    ( 0, 44, 90), ( -1, 58, 90), ( -4, 66, 90),
-    ( -8, 68, 90), (-12, 62, 90), (-15, 50, 90),
-    (-13, 36, 90), ( -6, 24, 90), ( 2, 18, 90),
-    ( 10, 14, 90), ( 18, 10, 90), ( 22, 6, 90),
-    ( 24, 2, 90), ( 18, -2, 90), ( 8, -2, 90),
-    ( -4, 0, 90), (-14, 2, 90), (-22, 2, 90),
-    (-24, 0, 90), (-18, -2, 90), ( -8, -2, 90),
-    ( 4, 0, 90), ( 14, 2, 90), ( 22, 0, 90),
-    ( 22, -2, 90), ( 14, -2, 90), ( 4, 0, 90),
-    ( -6, 2, 90), (-14, 2, 90),
+	(0, 0, 90),
+	(0, 44, 90),
+	(-1, 58, 90),
+	(-4, 66, 90),
+	(-8, 68, 90),
+	(-12, 62, 90),
+	(-15, 50, 90),
+	(-13, 36, 90),
+	(-6, 24, 90),
+	(2, 18, 90),
+	(10, 14, 90),
+	(18, 10, 90),
+	(22, 6, 90),
+	(24, 2, 90),
+	(18, -2, 90),
+	(8, -2, 90),
+	(-4, 0, 90),
+	(-14, 2, 90),
+	(-22, 2, 90),
+	(-24, 0, 90),
+	(-18, -2, 90),
+	(-8, -2, 90),
+	(4, 0, 90),
+	(14, 2, 90),
+	(22, 0, 90),
+	(22, -2, 90),
+	(14, -2, 90),
+	(4, 0, 90),
+	(-6, 2, 90),
+	(-14, 2, 90),
 ]
 
-# AUG, RPM 666 (90 ms), scoped M4 variant.
+# AUG, RPM 666 (90 ms), scoped M4 variant
 PATTERNS["aug"] = [
-    ( 0, 0, 90),
-    ( 0, 36, 90), ( 0, 46, 90), ( -1, 54, 90),
-    ( -3, 58, 90), ( -6, 56, 90), ( -9, 48, 90),
-    ( -8, 36, 90), ( -4, 24, 90), ( 2, 18, 90),
-    ( 8, 14, 90), ( 14, 10, 90), ( 18, 6, 90),
-    ( 18, 2, 90), ( 14, 0, 90), ( 8, -2, 90),
-    ( 0, -2, 90), ( -6, 0, 90), (-12, 2, 90),
-    (-16, 2, 90), (-14, 0, 90), ( -8, -2, 90),
-    ( 0, -2, 90), ( 6, 0, 90), ( 12, 2, 90),
+	(0, 0, 90),
+	(0, 36, 90),
+	(0, 46, 90),
+	(-1, 54, 90),
+	(-3, 58, 90),
+	(-6, 56, 90),
+	(-9, 48, 90),
+	(-8, 36, 90),
+	(-4, 24, 90),
+	(2, 18, 90),
+	(8, 14, 90),
+	(14, 10, 90),
+	(18, 6, 90),
+	(18, 2, 90),
+	(14, 0, 90),
+	(8, -2, 90),
+	(0, -2, 90),
+	(-6, 0, 90),
+	(-12, 2, 90),
+	(-16, 2, 90),
+	(-14, 0, 90),
+	(-8, -2, 90),
+	(0, -2, 90),
+	(6, 0, 90),
+	(12, 2, 90),
 ]
 
-# SG 553, AK's CT scoped equivalent. Same magnitudes as AK, slower (RPM 545 -> 110 ms/shot).
+# SG 553, AK's CT scoped equivalent. Same magnitudes as AK, slower (RPM 545 -> 110 ms/shot)
 PATTERNS["sg553"] = [
-    ( 0, 0, 110),
-    ( 0, 52, 110), ( 0, 64, 110), ( -2, 74, 110),
-    ( -5, 80, 110), ( -8, 80, 110), (-12, 74, 110),
-    (-14, 64, 110), (-14, 50, 110), (-10, 36, 110),
-    ( -4, 26, 110), ( 4, 20, 110), ( 12, 16, 110),
-    ( 18, 12, 110), ( 22, 8, 110), ( 22, 4, 110),
-    ( 18, 0, 110), ( 12, -2, 110), ( 4, -2, 110),
-    ( -6, 0, 110), (-14, 2, 110), (-20, 4, 110),
+	(0, 0, 110),
+	(0, 52, 110),
+	(0, 64, 110),
+	(-2, 74, 110),
+	(-5, 80, 110),
+	(-8, 80, 110),
+	(-12, 74, 110),
+	(-14, 64, 110),
+	(-14, 50, 110),
+	(-10, 36, 110),
+	(-4, 26, 110),
+	(4, 20, 110),
+	(12, 16, 110),
+	(18, 12, 110),
+	(22, 8, 110),
+	(22, 4, 110),
+	(18, 0, 110),
+	(12, -2, 110),
+	(4, -2, 110),
+	(-6, 0, 110),
+	(-14, 2, 110),
+	(-20, 4, 110),
 ]
 
-# SMGs are flatter than rifles: less vertical punch, more horizontal wander, and faster cycle times.
+# SMGs are flatter than rifles: less vertical punch, more horizontal wander, and faster cycle times
 PATTERNS["mac10"] = [
-    ( 0, 0, 75),
-    ( 0, 30, 75), ( -1, 38, 75), ( -3, 42, 75),
-    ( -6, 40, 75), ( -8, 34, 75), ( -8, 24, 75),
-    ( -4, 16, 75), ( 2, 12, 75), ( 8, 10, 75),
-    ( 14, 6, 75), ( 16, 2, 75), ( 14, 0, 75),
-    ( 8, -2, 75), ( 0, -2, 75), ( -8, 0, 75),
-    (-14, 2, 75), (-16, 2, 75), (-12, 0, 75),
-    ( -4, -2, 75), ( 4, 0, 75), ( 12, 2, 75),
-    ( 16, 0, 75), ( 12, -2, 75), ( 4, -2, 75),
+	(0, 0, 75),
+	(0, 30, 75),
+	(-1, 38, 75),
+	(-3, 42, 75),
+	(-6, 40, 75),
+	(-8, 34, 75),
+	(-8, 24, 75),
+	(-4, 16, 75),
+	(2, 12, 75),
+	(8, 10, 75),
+	(14, 6, 75),
+	(16, 2, 75),
+	(14, 0, 75),
+	(8, -2, 75),
+	(0, -2, 75),
+	(-8, 0, 75),
+	(-14, 2, 75),
+	(-16, 2, 75),
+	(-12, 0, 75),
+	(-4, -2, 75),
+	(4, 0, 75),
+	(12, 2, 75),
+	(16, 0, 75),
+	(12, -2, 75),
+	(4, -2, 75),
 ]
 PATTERNS["mp9"] = [
-    ( 0, 0, 70),
-    ( 0, 24, 70), ( 0, 30, 70), ( -2, 34, 70),
-    ( -4, 34, 70), ( -6, 28, 70), ( -6, 20, 70),
-    ( -3, 12, 70), ( 2, 8, 70), ( 6, 6, 70),
-    ( 10, 4, 70), ( 12, 2, 70), ( 10, 0, 70),
-    ( 6, -2, 70), ( 0, -2, 70), ( -6, 0, 70),
-    (-10, 2, 70), (-12, 1, 70), ( -8, 0, 70),
-    ( -2, -2, 70), ( 4, 0, 70), ( 8, 2, 70),
-    ( 10, 0, 70), ( 6, -2, 70),
+	(0, 0, 70),
+	(0, 24, 70),
+	(0, 30, 70),
+	(-2, 34, 70),
+	(-4, 34, 70),
+	(-6, 28, 70),
+	(-6, 20, 70),
+	(-3, 12, 70),
+	(2, 8, 70),
+	(6, 6, 70),
+	(10, 4, 70),
+	(12, 2, 70),
+	(10, 0, 70),
+	(6, -2, 70),
+	(0, -2, 70),
+	(-6, 0, 70),
+	(-10, 2, 70),
+	(-12, 1, 70),
+	(-8, 0, 70),
+	(-2, -2, 70),
+	(4, 0, 70),
+	(8, 2, 70),
+	(10, 0, 70),
+	(6, -2, 70),
 ]
 PATTERNS["mp7"] = [
-    ( 0, 0, 80),
-    ( 0, 26, 80), ( 0, 34, 80), ( -2, 38, 80),
-    ( -5, 38, 80), ( -8, 32, 80), ( -8, 22, 80),
-    ( -4, 14, 80), ( 2, 10, 80), ( 8, 8, 80),
-    ( 14, 6, 80), ( 16, 2, 80), ( 12, 0, 80),
-    ( 6, -2, 80), ( -2, -2, 80), ( -8, 0, 80),
-    (-14, 2, 80), (-14, 1, 80), (-10, 0, 80),
-    ( -2, -2, 80), ( 6, 0, 80), ( 12, 2, 80),
-    ( 14, 0, 80), ( 10, -2, 80),
+	(0, 0, 80),
+	(0, 26, 80),
+	(0, 34, 80),
+	(-2, 38, 80),
+	(-5, 38, 80),
+	(-8, 32, 80),
+	(-8, 22, 80),
+	(-4, 14, 80),
+	(2, 10, 80),
+	(8, 8, 80),
+	(14, 6, 80),
+	(16, 2, 80),
+	(12, 0, 80),
+	(6, -2, 80),
+	(-2, -2, 80),
+	(-8, 0, 80),
+	(-14, 2, 80),
+	(-14, 1, 80),
+	(-10, 0, 80),
+	(-2, -2, 80),
+	(6, 0, 80),
+	(12, 2, 80),
+	(14, 0, 80),
+	(10, -2, 80),
 ]
 PATTERNS["mp5sd"] = [
-    ( 0, 0, 80),
-    ( 0, 28, 80), ( 0, 36, 80), ( -2, 40, 80),
-    ( -5, 38, 80), ( -8, 32, 80), ( -9, 22, 80),
-    ( -5, 14, 80), ( 2, 10, 80), ( 9, 8, 80),
-    ( 14, 6, 80), ( 16, 2, 80), ( 12, 0, 80),
-    ( 6, -2, 80), ( -2, -2, 80), ( -9, 0, 80),
-    (-14, 2, 80), (-14, 1, 80), (-10, 0, 80),
-    ( -2, -2, 80), ( 6, 0, 80), ( 12, 2, 80),
-    ( 14, 0, 80), ( 10, -2, 80),
+	(0, 0, 80),
+	(0, 28, 80),
+	(0, 36, 80),
+	(-2, 40, 80),
+	(-5, 38, 80),
+	(-8, 32, 80),
+	(-9, 22, 80),
+	(-5, 14, 80),
+	(2, 10, 80),
+	(9, 8, 80),
+	(14, 6, 80),
+	(16, 2, 80),
+	(12, 0, 80),
+	(6, -2, 80),
+	(-2, -2, 80),
+	(-9, 0, 80),
+	(-14, 2, 80),
+	(-14, 1, 80),
+	(-10, 0, 80),
+	(-2, -2, 80),
+	(6, 0, 80),
+	(12, 2, 80),
+	(14, 0, 80),
+	(10, -2, 80),
 ]
 PATTERNS["ump45"] = [
-    ( 0, 0, 90),
-    ( 0, 32, 90), ( 0, 42, 90), ( -2, 48, 90),
-    ( -5, 46, 90), ( -8, 38, 90), ( -8, 26, 90),
-    ( -4, 16, 90), ( 2, 12, 90), ( 8, 10, 90),
-    ( 14, 6, 90), ( 14, 2, 90), ( 10, 0, 90),
-    ( 4, -2, 90), ( -4, -2, 90), (-10, 0, 90),
-    (-14, 2, 90), (-14, 1, 90), ( -8, -1, 90),
-    ( 0, -2, 90), ( 8, 0, 90), ( 12, 2, 90),
-    ( 14, 0, 90), ( 10, -2, 90), ( 2, -2, 90),
+	(0, 0, 90),
+	(0, 32, 90),
+	(0, 42, 90),
+	(-2, 48, 90),
+	(-5, 46, 90),
+	(-8, 38, 90),
+	(-8, 26, 90),
+	(-4, 16, 90),
+	(2, 12, 90),
+	(8, 10, 90),
+	(14, 6, 90),
+	(14, 2, 90),
+	(10, 0, 90),
+	(4, -2, 90),
+	(-4, -2, 90),
+	(-10, 0, 90),
+	(-14, 2, 90),
+	(-14, 1, 90),
+	(-8, -1, 90),
+	(0, -2, 90),
+	(8, 0, 90),
+	(12, 2, 90),
+	(14, 0, 90),
+	(10, -2, 90),
+	(2, -2, 90),
 ]
 PATTERNS["p90"] = [
-    ( 0, 0, 68),
-    ( 0, 22, 68), ( 0, 28, 68), ( -1, 30, 68),
-    ( -3, 30, 68), ( -5, 26, 68), ( -6, 18, 68),
-    ( -4, 12, 68), ( 0, 8, 68), ( 4, 6, 68),
-    ( 8, 4, 68), ( 10, 2, 68), ( 8, 0, 68),
-    ( 4, -2, 68), ( -2, -2, 68), ( -6, 0, 68),
-    ( -8, 2, 68), ( -8, 1, 68), ( -4, -1, 68),
-    ( 2, -2, 68), ( 6, 0, 68), ( 8, 2, 68),
-    ( 8, 0, 68), ( 4, -2, 68), ( 0, -2, 68),
-    ( -4, 0, 68), ( -6, 2, 68), ( -8, 1, 68),
-    ( -6, 0, 68), ( 0, -2, 68),
+	(0, 0, 68),
+	(0, 22, 68),
+	(0, 28, 68),
+	(-1, 30, 68),
+	(-3, 30, 68),
+	(-5, 26, 68),
+	(-6, 18, 68),
+	(-4, 12, 68),
+	(0, 8, 68),
+	(4, 6, 68),
+	(8, 4, 68),
+	(10, 2, 68),
+	(8, 0, 68),
+	(4, -2, 68),
+	(-2, -2, 68),
+	(-6, 0, 68),
+	(-8, 2, 68),
+	(-8, 1, 68),
+	(-4, -1, 68),
+	(2, -2, 68),
+	(6, 0, 68),
+	(8, 2, 68),
+	(8, 0, 68),
+	(4, -2, 68),
+	(0, -2, 68),
+	(-4, 0, 68),
+	(-6, 2, 68),
+	(-8, 1, 68),
+	(-6, 0, 68),
+	(0, -2, 68),
 ]
 PATTERNS["bizon"] = [
-    ( 0, 0, 80),
-    ( 0, 24, 80), ( 0, 32, 80), ( -2, 36, 80),
-    ( -5, 36, 80), ( -8, 30, 80), ( -8, 22, 80),
-    ( -4, 14, 80), ( 2, 10, 80), ( 8, 8, 80),
-    ( 12, 6, 80), ( 14, 2, 80), ( 10, 0, 80),
-    ( 4, -2, 80), ( -2, -2, 80), ( -8, 0, 80),
-    (-12, 2, 80), (-12, 1, 80), ( -8, -1, 80),
-    ( -2, -2, 80), ( 4, 0, 80), ( 10, 2, 80),
-    ( 12, 0, 80), ( 8, -2, 80), ( 2, -2, 80),
+	(0, 0, 80),
+	(0, 24, 80),
+	(0, 32, 80),
+	(-2, 36, 80),
+	(-5, 36, 80),
+	(-8, 30, 80),
+	(-8, 22, 80),
+	(-4, 14, 80),
+	(2, 10, 80),
+	(8, 8, 80),
+	(12, 6, 80),
+	(14, 2, 80),
+	(10, 0, 80),
+	(4, -2, 80),
+	(-2, -2, 80),
+	(-8, 0, 80),
+	(-12, 2, 80),
+	(-12, 1, 80),
+	(-8, -1, 80),
+	(-2, -2, 80),
+	(4, 0, 80),
+	(10, 2, 80),
+	(12, 0, 80),
+	(8, -2, 80),
+	(2, -2, 80),
 ]
 
 # LMGs
 PATTERNS["m249"] = [
-    ( 0, 0, 80),
-    ( 0, 36, 80), ( -1, 50, 80), ( -4, 60, 80),
-    ( -8, 62, 80), (-12, 56, 80), (-14, 42, 80),
-    (-10, 28, 80), ( -2, 18, 80), ( 6, 14, 80),
-    ( 14, 10, 80), ( 20, 6, 80), ( 22, 2, 80),
-    ( 18, -2, 80), ( 8, -2, 80), ( -4, 0, 80),
-    (-14, 2, 80), (-22, 4, 80), (-22, 2, 80),
-    (-16, 0, 80), ( -4, -2, 80), ( 6, 0, 80),
-    ( 16, 2, 80), ( 22, 0, 80), ( 18, -2, 80),
-    ( 6, -2, 80), ( -6, 0, 80), (-16, 2, 80),
-    (-20, 0, 80), (-12, -2, 80),
+	(0, 0, 80),
+	(0, 36, 80),
+	(-1, 50, 80),
+	(-4, 60, 80),
+	(-8, 62, 80),
+	(-12, 56, 80),
+	(-14, 42, 80),
+	(-10, 28, 80),
+	(-2, 18, 80),
+	(6, 14, 80),
+	(14, 10, 80),
+	(20, 6, 80),
+	(22, 2, 80),
+	(18, -2, 80),
+	(8, -2, 80),
+	(-4, 0, 80),
+	(-14, 2, 80),
+	(-22, 4, 80),
+	(-22, 2, 80),
+	(-16, 0, 80),
+	(-4, -2, 80),
+	(6, 0, 80),
+	(16, 2, 80),
+	(22, 0, 80),
+	(18, -2, 80),
+	(6, -2, 80),
+	(-6, 0, 80),
+	(-16, 2, 80),
+	(-20, 0, 80),
+	(-12, -2, 80),
 ]
 PATTERNS["negev"] = [
-    ( 0, 0, 75),
-    ( 0, 44, 75), ( -2, 58, 75), ( -6, 68, 75),
-    (-12, 68, 75), (-16, 58, 75), (-14, 42, 75),
-    ( -6, 26, 75), ( 4, 18, 75), ( 12, 14, 75),
-    ( 20, 10, 75), ( 24, 4, 75), ( 22, 0, 75),
-    ( 14, -2, 75), ( 2, -2, 75), (-10, 0, 75),
-    (-20, 2, 75), (-24, 2, 75), (-20, 0, 75),
-    ( -8, -2, 75), ( 4, 0, 75), ( 16, 2, 75),
-    ( 22, 0, 75), ( 18, -2, 75), ( 6, -2, 75),
-    ( -8, 0, 75), (-18, 2, 75), (-20, 0, 75),
-    (-12, -2, 75),
+	(0, 0, 75),
+	(0, 44, 75),
+	(-2, 58, 75),
+	(-6, 68, 75),
+	(-12, 68, 75),
+	(-16, 58, 75),
+	(-14, 42, 75),
+	(-6, 26, 75),
+	(4, 18, 75),
+	(12, 14, 75),
+	(20, 10, 75),
+	(24, 4, 75),
+	(22, 0, 75),
+	(14, -2, 75),
+	(2, -2, 75),
+	(-10, 0, 75),
+	(-20, 2, 75),
+	(-24, 2, 75),
+	(-20, 0, 75),
+	(-8, -2, 75),
+	(4, 0, 75),
+	(16, 2, 75),
+	(22, 0, 75),
+	(18, -2, 75),
+	(6, -2, 75),
+	(-8, 0, 75),
+	(-18, 2, 75),
+	(-20, 0, 75),
+	(-12, -2, 75),
 ]
 
-# Pistols use only light per-shot pull-down for fast semi-auto taps.
-PATTERNS["pistol"] = [
-    ( 0, 0, 110),
-    ( 0, 10, 110), ( 0, 10, 110), ( 0, 8, 120),
-    ( 0, 8, 120), ( 0, 6, 130), ( 0, 6, 130),
-    ( 0, 4, 140), ( 0, 4, 140),
-]
+# Pistols use only light per-shot pull-down for fast semi-auto taps
+PATTERNS["pistol"] = [(0, 0, 110), (0, 10, 110), (0, 10, 110), (0, 8, 120), (0, 8, 120), (0, 6, 130), (0, 6, 130), (0, 4, 140), (0, 4, 140)]
 
-# Single-shot weapons: explicit no-op so weapon switches don't leave the last rifle pattern playing.
-for noop in ("awp", "ssg08", "scar20", "g3sg1",
-             "deagle", "usp", "p2000", "revolver",
-             "nova", "mag7", "sawedoff", "xm1014",
-             "knife", "grenade"):
-    PATTERNS[noop] = [(0, 0, 100)]
+# Single-shot weapons: explicit no-op so weapon switches don't leave the last rifle pattern playing
+for noop in ("awp", "ssg08", "scar20", "g3sg1", "deagle", "usp", "p2000", "revolver", "nova", "mag7", "sawedoff", "xm1014", "knife", "grenade"):
+	PATTERNS[noop] = [(0, 0, 100)]
 
-# Normalize recorded gun drift into compensation vectors and fill shot-one recoil.
+# Normalize recorded gun drift into compensation vectors and fill shot-one recoil
 for weapon_name, pattern in PATTERNS.items():
-    shifted = pattern
-    if len(pattern) >= 2 and pattern[0][:2] == (0, 0):
-        shifted = [
-            (
-                int(round(pattern[1][0] * 0.5)),
-                int(round(pattern[1][1] * 0.5)),
-                pattern[0][2],
-            ),
-            *pattern[1:],
-        ]
-    PATTERNS[weapon_name] = [
-        (int(round(-dx * 0.70)), dy, delay)
-        for dx, dy, delay in shifted
-    ]
+	shifted = pattern
+	if len(pattern) >= 2 and pattern[0][:2] == (0, 0):
+		shifted = [(int(round(pattern[1][0] * 0.5)), int(round(pattern[1][1] * 0.5)), pattern[0][2]), *pattern[1:]]
+	PATTERNS[weapon_name] = [(int(round(-dx * 0.70)), dy, delay) for dx, dy, delay in shifted]
 del weapon_name, pattern, shifted, noop
 
-# Stable generation order keeps output diffs clean.
+# Stable generation order keeps output diffs clean
 ALL_WEAPONS: list[str] = [
-    "ak47", "m4a4", "m4a1s", "famas", "galil", "aug", "sg553",
-    "mac10", "mp9", "mp7", "mp5sd", "ump45", "p90", "bizon",
-    "m249", "negev", "pistol", "awp", "ssg08", "scar20", "g3sg1",
-    "deagle", "usp", "p2000", "revolver", "nova", "mag7", "sawedoff",
-    "xm1014", "knife", "grenade",
+	"ak47",
+	"m4a4",
+	"m4a1s",
+	"famas",
+	"galil",
+	"aug",
+	"sg553",
+	"mac10",
+	"mp9",
+	"mp7",
+	"mp5sd",
+	"ump45",
+	"p90",
+	"bizon",
+	"m249",
+	"negev",
+	"pistol",
+	"awp",
+	"ssg08",
+	"scar20",
+	"g3sg1",
+	"deagle",
+	"usp",
+	"p2000",
+	"revolver",
+	"nova",
+	"mag7",
+	"sawedoff",
+	"xm1014",
+	"knife",
+	"grenade",
 ]
 
 
-# Logitech G HUB Lua script
 def _build_logitech_lua() -> str:
-    """Return a complete G HUB Lua script with spray patterns."""
-    weapon_blocks: list[str] = []
-    for name in ALL_WEAPONS:
-        rows: list[str] = []
-        chunk: list[str] = []
-        for dx, dy, delay in PATTERNS[name]:
-            chunk.append(f"{{{dx:>4},{dy:>4},{delay:>4}}}")
-            if len(chunk) == 4:
-                rows.append(" " + ", ".join(chunk) + ",")
-                chunk = []
-        if chunk:
-            rows.append(" " + ", ".join(chunk) + ",")
-        body = "\n".join(rows)
-        weapon_blocks.append(
-            f'PATTERNS["{name}"] = {{\n{body}\n}}\n'
-        )
-    patterns_section = "\n".join(weapon_blocks)
+	'''Return a complete G HUB Lua script with spray patterns.'''
+	weapon_blocks: list[str] = []
+	for weapon_name in ALL_WEAPONS:
+		rows: list[str] = []
+		chunk: list[str] = []
+		for dx, dy, delay in PATTERNS[weapon_name]:
+			chunk.append(f"{{{dx:>4},{dy:>4},{delay:>4}}}")
+			if len(chunk) == 4:
+				rows.append(" " + ", ".join(chunk) + ",")
+				chunk = []
+		if chunk:
+			rows.append(" " + ", ".join(chunk) + ",")
+		body = "\n".join(rows)
+		weapon_blocks.append(f'PATTERNS["{weapon_name}"] = {{\n{body}\n}}\n')
+	patterns_section = "\n".join(weapon_blocks)
 
-    return f"""-- ========================================================================
+	return f"""-- ========================================================================
 -- CS2 No-Recoil script \u2014 Logitech G HUB (Lua)
 -- Generated by \u00b7 CS2 ESP \u00b7 build
 --
@@ -541,27 +807,24 @@ end
 """
 
 
-# AHK v2 script (Razer / SteelSeries / Corsair / others)
 def _build_ahk_universal() -> str:
-    """Return one AHK v2 script for all non-Logitech vendors."""
-    weapon_blocks: list[str] = []
-    for name in ALL_WEAPONS:
-        rows: list[str] = []
-        chunk: list[str] = []
-        for dx, dy, delay in PATTERNS[name]:
-            chunk.append(f"[{dx:>4},{dy:>4},{delay:>4}]")
-            if len(chunk) == 4:
-                rows.append(" " + ", ".join(chunk) + ",")
-                chunk = []
-        if chunk:
-            rows.append(" " + ", ".join(chunk) + ",")
-        body = "\n".join(rows)
-        weapon_blocks.append(
-            f'patterns["{name}"] := [\n{body}\n]\n'
-        )
-    patterns_section = "\n".join(weapon_blocks)
+	'''Return one AHK v2 script for all non-Logitech vendors.'''
+	weapon_blocks: list[str] = []
+	for weapon_name in ALL_WEAPONS:
+		rows: list[str] = []
+		chunk: list[str] = []
+		for dx, dy, delay in PATTERNS[weapon_name]:
+			chunk.append(f"[{dx:>4},{dy:>4},{delay:>4}]")
+			if len(chunk) == 4:
+				rows.append(" " + ", ".join(chunk) + ",")
+				chunk = []
+		if chunk:
+			rows.append(" " + ", ".join(chunk) + ",")
+		body = "\n".join(rows)
+		weapon_blocks.append(f'patterns["{weapon_name}"] := [\n{body}\n]\n')
+	patterns_section = "\n".join(weapon_blocks)
 
-    return f"""; ========================================================================
+	return f"""; ========================================================================
 ; CS2 No-Recoil script \u2014 AutoHotkey v2 (universal)
 ; Generated by \u00b7 CS2 ESP \u00b7 build
 ;
@@ -795,7 +1058,7 @@ OnCapsChange() {{
 """
 
 
-# Per-vendor HTML guide copy rendered by the Qt panel's RichText label.
+# Per-vendor HTML guide copy rendered by the Qt panel's RichText label
 
 _GUIDE_LOGITECH = """\
 <h3>Logitech G HUB \u2014 how to install</h3>
@@ -876,32 +1139,18 @@ sens use the same MULT.</p>
 
 
 class _Vendor(NamedTuple):
-    id: str
-    display: str
-    language: str  # "Lua" or "AHK"
-    extension: str  # ".lua" or ".ahk"
-    builder: Callable[[], str]
-    guide_html: str
+	id: str
+	display: str
+	language: str  # "Lua" or "AHK"
+	extension: str  # ".lua" or ".ahk"
+	builder: Callable[[], str]
+	guide_html: str
 
 
 VENDORS: tuple[_Vendor, ...] = (
-    _Vendor(
-        id="logitech",
-        display="Logitech G HUB",
-        language="Lua",
-        extension=".lua",
-        builder=_build_logitech_lua,
-        guide_html=_GUIDE_LOGITECH,
-    ),
-    # Razer/SteelSeries/Corsair collapse into one universal AHK card; script is identical for every non-Logitech mouse since the OS HID layer doesn't care about brand.
-    _Vendor(
-        id="ahk",
-        display="Razer, SteelSeries, Corsair & others",
-        language="AHK v2",
-        extension=".ahk",
-        builder=_build_ahk_universal,
-        guide_html=_GUIDE_AHK,
-    ),
+	_Vendor(id="logitech", display="Logitech G HUB", language="Lua", extension=".lua", builder=_build_logitech_lua, guide_html=_GUIDE_LOGITECH),
+	# Razer, SteelSeries and Corsair share one universal AHK card; the OS HID layer makes the script identical across brands
+	_Vendor(id="ahk", display="Razer, SteelSeries, Corsair & others", language="AHK v2", extension=".ahk", builder=_build_ahk_universal, guide_html=_GUIDE_AHK),
 )
 
 
@@ -909,23 +1158,20 @@ _BY_ID: dict[str, _Vendor] = {v.id: v for v in VENDORS}
 
 
 def get_vendor(vendor_id: str) -> _Vendor:
-    """Look up a vendor registration. Raises KeyError on miss."""
-    return _BY_ID[vendor_id]
+	'''Look up a vendor registration. Raises KeyError on miss.'''
+	return _BY_ID[vendor_id]
 
 
 def build_script(vendor_id: str) -> str:
-    """Render the finished script text for vendor_id."""
-    return get_vendor(vendor_id).builder()
+	'''Render the finished script text for vendor_id.'''
+	return get_vendor(vendor_id).builder()
 
 
 def suggested_filename(vendor_id: str) -> str:
-    """Default file name for QFileDialog save prompts."""
-    v = get_vendor(vendor_id)
-    suffix = "" if v.id == "ahk" else f"_{v.id}"
-    return f"cs2_norecoil{suffix}{v.extension}"
+	'''Default file name for QFileDialog save prompts.'''
+	vendor = get_vendor(vendor_id)
+	suffix = "" if vendor.id == "ahk" else f"_{vendor.id}"
+	return f"cs2_norecoil{suffix}{vendor.extension}"
 
 
-__all__ = [
-    "VENDORS", "get_vendor", "build_script",
-    "suggested_filename", "ALL_WEAPONS", "PATTERNS",
-]
+__all__ = ["VENDORS", "get_vendor", "build_script", "suggested_filename", "ALL_WEAPONS", "PATTERNS"]

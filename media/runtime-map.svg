@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="248" viewBox="0 0 1200 248" role="img" aria-labelledby="title desc">
+  <title id="title">MS Mesh runtime at a glance</title>
+  <desc id="desc">CPU state reading and pose preparation feed a GPU overlay; a separate Qt menu shares configuration and status.</desc>
+  <defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 7 3.5 0 7" fill="none" stroke="#8eafbf" stroke-width="1.4"/></marker></defs>
+  <rect width="1200" height="248" rx="18" fill="#10151b"/>
+  <g font-family="Segoe UI,Arial,sans-serif" fill="#e7edf3">
+    <text x="26" y="35" font-size="18" font-weight="600">One overlay. Separate jobs.</text>
+    <text x="1174" y="35" font-size="12" fill="#96a7b7" text-anchor="end">CPU prepares · GPU draws · Qt controls</text>
+    <g fill="#1b222b" stroke="#34434f"><rect x="26" y="60" width="260" height="92" rx="12"/><rect x="322" y="60" width="260" height="92" rx="12"/><rect x="618" y="60" width="260" height="92" rx="12"/><rect x="914" y="60" width="260" height="92" rx="12"/></g>
+    <g font-size="17" font-weight="600"><text x="44" y="92">State reader</text><text x="340" y="92">Pose &amp; projection</text><text x="636" y="92">GPU overlay</text><text x="932" y="92">Desktop composition</text></g>
+    <g font-size="13" fill="#a6b5c3"><text x="44" y="118">CPU · latest snapshots</text><text x="340" y="118">CPU · batching and caches</text><text x="636" y="118">OpenGL · meshes and HUD</text><text x="932" y="118">Windows · independent window</text></g>
+    <g stroke="#8eafbf" stroke-width="1.4" marker-end="url(#arrow)"><path d="M290 106H314"/><path d="M586 106H610"/><path d="M882 106H906"/></g>
+    <rect x="26" y="174" width="1148" height="48" rx="10" fill="#192129" stroke="#34434f"/>
+    <text x="44" y="204" font-size="14" font-weight="600">Qt control center</text><text x="235" y="204" font-size="13" fill="#a6b5c3">Separate process · shared TOML + status IPC · live settings, bindings and HUD layout</text>
+    <text x="1156" y="204" font-size="12" fill="#8eafbf" text-anchor="end">Actual renderer reported in Settings</text>
+  </g>
+</svg>

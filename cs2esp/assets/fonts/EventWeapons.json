@@ -1,0 +1,1260 @@
+{
+  "units_per_em": 1000,
+  "ascent": 900,
+  "icons": {
+    "weapon_ak47": {
+      "char": "\ue000",
+      "label": "AK47",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/ak47.svg",
+      "sha256": "6b6a0e92de5483e0ff47b2c3f0b108cc3f4b406c22e0367fe92077ae00b393eb",
+      "bounds": [
+        50,
+        269,
+        950,
+        531
+      ]
+    },
+    "weapon_ammobox": {
+      "char": "\ue001",
+      "label": "AMMOBOX",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/ammobox.svg",
+      "sha256": "1f9d1a3c10f7c00f4807d6d18df61ba96cffb0b0e925e05d6f1e256f5ea746fc",
+      "bounds": [
+        50,
+        70,
+        950,
+        730
+      ]
+    },
+    "weapon_ammobox_threepack": {
+      "char": "\ue002",
+      "label": "AMMOBOX THREEPACK",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/ammobox_threepack.svg",
+      "sha256": "c888675e6b1e09ef37d6a1d8a606e0f6c60919f1127c92e2ba27877b5f90154a",
+      "bounds": [
+        50,
+        123,
+        950,
+        677
+      ]
+    },
+    "weapon_armor": {
+      "char": "\ue003",
+      "label": "ARMOR",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/armor.svg",
+      "sha256": "18bb3d0ab3adf33bfd32d7918b0921f6875fb1e6012dbae1bb02d76f280bb9d6",
+      "bounds": [
+        130,
+        -50,
+        870,
+        850
+      ]
+    },
+    "weapon_armor_helmet": {
+      "char": "\ue004",
+      "label": "ARMOR HELMET",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/armor_helmet.svg",
+      "sha256": "10a9ce2e818ec8f0bec8296b51e159a0baafca289f018d0eeaa0890d1e535de4",
+      "bounds": [
+        46,
+        108,
+        951,
+        692
+      ]
+    },
+    "weapon_assaultsuit": {
+      "char": "\ue005",
+      "label": "ASSAULTSUIT",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/assaultsuit.svg",
+      "sha256": "5763538a7a5fc0ecb8adb059ea6f81b79bf211b6039f9f2327493468cd62772a",
+      "bounds": [
+        46,
+        88,
+        951,
+        710
+      ]
+    },
+    "weapon_assaultsuit_helmet_only": {
+      "char": "\ue006",
+      "label": "ASSAULTSUIT HELMET ONLY",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/assaultsuit_helmet_only.svg",
+      "sha256": "61a827021257dabfc335afb07e3dce963d366ffcec5ff474947ade25ccce31d4",
+      "bounds": [
+        46,
+        88,
+        951,
+        710
+      ]
+    },
+    "weapon_aug": {
+      "char": "\ue007",
+      "label": "AUG",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/aug.svg",
+      "sha256": "5677290006b9601439b20426d720a1e12624fe9e9f12c1b26e92aec4c7ee514e",
+      "bounds": [
+        50,
+        212,
+        950,
+        587
+      ]
+    },
+    "weapon_awp": {
+      "char": "\ue008",
+      "label": "AWP",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/awp.svg",
+      "sha256": "298fac2cd0df20971a36c4ae48502741e482662c23e93318b225a77500310df4",
+      "bounds": [
+        50,
+        315,
+        950,
+        485
+      ]
+    },
+    "weapon_bayonet": {
+      "char": "\ue009",
+      "label": "BAYONET",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/bayonet.svg",
+      "sha256": "3aabce2509adade77be9eda7c86346f1b71b1367962949b3a0993898d4cd283d",
+      "bounds": [
+        50,
+        304,
+        950,
+        496
+      ]
+    },
+    "weapon_bizon": {
+      "char": "\ue00a",
+      "label": "BIZON",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/bizon.svg",
+      "sha256": "0f50781c566a4114d3ec18bcd8d59dc76244c43c3a85b40759fe91ba4789c942",
+      "bounds": [
+        50,
+        262,
+        950,
+        538
+      ]
+    },
+    "weapon_c4": {
+      "char": "\ue00b",
+      "label": "C4",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/c4.svg",
+      "sha256": "4ccfa5c0b98f54e3815f92779814d5ef3ddb6f01d2f3ccebd049372efb2ee310",
+      "bounds": [
+        162,
+        -51,
+        837,
+        851
+      ]
+    },
+    "weapon_clothing_hands": {
+      "char": "\ue00c",
+      "label": "CLOTHING HANDS",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/clothing_hands.svg",
+      "sha256": "f3f30a156fdd1d25d081a89c91b1c5531aa169b3258c69e9583388835406c48a",
+      "bounds": [
+        47,
+        -11,
+        953,
+        812
+      ]
+    },
+    "weapon_customplayer": {
+      "char": "\ue00d",
+      "label": "CUSTOMPLAYER",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/customplayer.svg",
+      "sha256": "b315b00a57f83675312466bc5cc46d9795d4948322a369632bb430f4386a2abe",
+      "bounds": [
+        288,
+        -50,
+        709,
+        850
+      ]
+    },
+    "weapon_cz75a": {
+      "char": "\ue00e",
+      "label": "CZ75A",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/cz75a.svg",
+      "sha256": "96e534e2d40ad1c7bfc38ccfe48b34a5131421cb6f1203790ae08376a1fc8e93",
+      "bounds": [
+        50,
+        119,
+        950,
+        681
+      ]
+    },
+    "weapon_deagle": {
+      "char": "\ue00f",
+      "label": "DEAGLE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/deagle.svg",
+      "sha256": "4cb9f44936b5acd7f2f63f0e63d6d5fee6b7f5ba0b1665eb10156eafd809a60f",
+      "bounds": [
+        50,
+        147,
+        950,
+        652
+      ]
+    },
+    "weapon_decoy": {
+      "char": "\ue010",
+      "label": "DECOY",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/decoy.svg",
+      "sha256": "2d49015e12f7ad1217d89509fedd5801e0103c646a22d144509004147a3b67b0",
+      "bounds": [
+        103,
+        -50,
+        897,
+        850
+      ]
+    },
+    "weapon_defuser": {
+      "char": "\ue011",
+      "label": "DEFUSER",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/defuser.svg",
+      "sha256": "9810a89c92279b7eeeb1837d16a0a9a7a782114fb8e23aeb5d48872146bdf3be",
+      "bounds": [
+        50,
+        -7,
+        950,
+        802
+      ]
+    },
+    "weapon_disconnect": {
+      "char": "\ue012",
+      "label": "DISCONNECT",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/disconnect.svg",
+      "sha256": "910f6f369d70b385fb5f9cf1aaa98624035459181934fb7e30ac24cd45fb6f03",
+      "bounds": [
+        44,
+        21,
+        951,
+        780
+      ]
+    },
+    "weapon_dronegun": {
+      "char": "\ue013",
+      "label": "DRONEGUN",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/dronegun.svg",
+      "sha256": "bf9412aea468c820a16339b8565e688237b19eef0ef0a3c78ff8617ec1a2bf72",
+      "bounds": [
+        50,
+        41,
+        950,
+        759
+      ]
+    },
+    "weapon_elite": {
+      "char": "\ue014",
+      "label": "ELITE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/elite.svg",
+      "sha256": "eb8e491ebfa7b5920f94ad33853af25172f8a4d1856cdbb7e8863fe77b906c7d",
+      "bounds": [
+        50,
+        248,
+        950,
+        552
+      ]
+    },
+    "weapon_famas": {
+      "char": "\ue015",
+      "label": "FAMAS",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/famas.svg",
+      "sha256": "58c98f457b569912bb92190394b29b746644a56bf1e65f910408f8fba312f9cb",
+      "bounds": [
+        50,
+        236,
+        951,
+        566
+      ]
+    },
+    "weapon_firebomb": {
+      "char": "\ue016",
+      "label": "FIREBOMB",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/firebomb.svg",
+      "sha256": "5dd369b0705e7ded4a8aece6ed92987b84d114b48ae275fb442b282d56d1743e",
+      "bounds": [
+        191,
+        -54,
+        806,
+        850
+      ]
+    },
+    "weapon_fiveseven": {
+      "char": "\ue017",
+      "label": "FIVESEVEN",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/fiveseven.svg",
+      "sha256": "61eaf4356b6512e5fd5bc16c56e26af859de1fa1bb75ea5280ea20c91f42530f",
+      "bounds": [
+        50,
+        78,
+        950,
+        727
+      ]
+    },
+    "weapon_flair0": {
+      "char": "\ue018",
+      "label": "FLAIR0",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/flair0.svg",
+      "sha256": "c3eb9e115820a081d46fdb738cea10aaf28b2a08dd182b776456ef3491811ee6",
+      "bounds": [
+        160,
+        -50,
+        840,
+        850
+      ]
+    },
+    "weapon_flashbang": {
+      "char": "\ue019",
+      "label": "FLASHBANG",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/flashbang.svg",
+      "sha256": "bccb65a3452c6695a342654566510e6f20352d4449740ad477c2a4eeea3d3645",
+      "bounds": [
+        87,
+        -50,
+        913,
+        850
+      ]
+    },
+    "weapon_flashbang_assist": {
+      "char": "\ue01a",
+      "label": "FLASHBANG ASSIST",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/flashbang_assist.svg",
+      "sha256": "a9940b3a209c9cb4bd8ce30c424c734b681594621a3f2a6209bc291ac3ef6866",
+      "bounds": [
+        44,
+        68,
+        950,
+        729
+      ]
+    },
+    "weapon_g3sg1": {
+      "char": "\ue01b",
+      "label": "G3SG1",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/g3sg1.svg",
+      "sha256": "e30b98156f500fa5f06344d66bbca74f5743e381bb4a067859779790d5581fc7",
+      "bounds": [
+        50,
+        281,
+        950,
+        521
+      ]
+    },
+    "weapon_galilar": {
+      "char": "\ue01c",
+      "label": "GALILAR",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/galilar.svg",
+      "sha256": "e4a997fd96a8d1d8c44244d4bb749e6b1a62dd7b26c94e82cbc11eadd798fbe1",
+      "bounds": [
+        48,
+        272,
+        950,
+        528
+      ]
+    },
+    "weapon_glock": {
+      "char": "\ue01d",
+      "label": "GLOCK",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/glock.svg",
+      "sha256": "d9063ba41b3784ed5da491dd5ad6426416efd4978d9e75309323260b29882627",
+      "bounds": [
+        50,
+        117,
+        950,
+        681
+      ]
+    },
+    "weapon_grenadepack": {
+      "char": "\ue01e",
+      "label": "GRENADEPACK",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/grenadepack.svg",
+      "sha256": "188b262474dcf8ded8efb10d44088ba27e8ee3908101bcc2612511f0c87b9111",
+      "bounds": [
+        50,
+        1,
+        950,
+        799
+      ]
+    },
+    "weapon_grenadepack2": {
+      "char": "\ue01f",
+      "label": "GRENADEPACK2",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/grenadepack2.svg",
+      "sha256": "a6d0d8dffb8593d1d4b34f7416b9363de80ad39d234339c87f0c286818a2c20a",
+      "bounds": [
+        68,
+        -50,
+        932,
+        850
+      ]
+    },
+    "weapon_healthshot": {
+      "char": "\ue020",
+      "label": "HEALTHSHOT",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/healthshot.svg",
+      "sha256": "340dd961ee5096e41860e1d3bc065043ccfdafb1b36c311522ce00b1823397ec",
+      "bounds": [
+        50,
+        73,
+        950,
+        727
+      ]
+    },
+    "weapon_heavy_armor": {
+      "char": "\ue021",
+      "label": "HEAVY ARMOR",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/heavy_armor.svg",
+      "sha256": "bc8a50fba855b11639e7488e057ee97d9f68b364c0bb2fce22cb10bed6b783f0",
+      "bounds": [
+        50,
+        87,
+        951,
+        713
+      ]
+    },
+    "weapon_hegrenade": {
+      "char": "\ue022",
+      "label": "HEGRENADE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/hegrenade.svg",
+      "sha256": "8c33330ea8db7626d62fd6cd60139e2242be9e4b5adde54a5d43a967c462e479",
+      "bounds": [
+        162,
+        -50,
+        838,
+        850
+      ]
+    },
+    "weapon_helmet": {
+      "char": "\ue023",
+      "label": "HELMET",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/helmet.svg",
+      "sha256": "9982e94af4a0d783d746c4a53fc544266619ac3481c01ae768b1d6ca50208e01",
+      "bounds": [
+        77,
+        -50,
+        922,
+        850
+      ]
+    },
+    "weapon_hkp2000": {
+      "char": "\ue024",
+      "label": "HKP2000",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/hkp2000.svg",
+      "sha256": "66fe96c04579615f3491d662770511785d57557c2bcc21ac81dddfc0ba65238a",
+      "bounds": [
+        44,
+        59,
+        951,
+        743
+      ]
+    },
+    "weapon_incgrenade": {
+      "char": "\ue025",
+      "label": "INCGRENADE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/incgrenade.svg",
+      "sha256": "7c87dec72d1c0c622ba248fa88a6cd75f91671086a995e6a72201c9404a205d2",
+      "bounds": [
+        295,
+        -52,
+        702,
+        850
+      ]
+    },
+    "weapon_inferno": {
+      "char": "\ue026",
+      "label": "INFERNO",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/inferno.svg",
+      "sha256": "5cf106ce6733adca1a22d2f419e322888c1a3eecfef49d1eb0c7677ca8c31484",
+      "bounds": [
+        47,
+        -18,
+        954,
+        818
+      ]
+    },
+    "weapon_kevlar": {
+      "char": "\ue027",
+      "label": "KEVLAR",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/kevlar.svg",
+      "sha256": "77a0cbfea4fdd74bf0cf2785f4f373291c2a67de2d775326cf9087c0ec8c377e",
+      "bounds": [
+        130,
+        -50,
+        870,
+        850
+      ]
+    },
+    "weapon_knife": {
+      "char": "\ue028",
+      "label": "KNIFE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife.svg",
+      "sha256": "cd678960c740026c7120dfc7d06abbd8a9553673438c47a4371d8df5c1b635c3",
+      "bounds": [
+        50,
+        297,
+        950,
+        503
+      ]
+    },
+    "weapon_knife_bowie": {
+      "char": "\ue029",
+      "label": "KNIFE BOWIE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_bowie.svg",
+      "sha256": "c4c608a92226d3282b1d9725f7f6ec840aec30701b94778b68961c2888d02898",
+      "bounds": [
+        50,
+        309,
+        950,
+        491
+      ]
+    },
+    "weapon_knife_butterfly": {
+      "char": "\ue02a",
+      "label": "KNIFE BUTTERFLY",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_butterfly.svg",
+      "sha256": "f882fdfee8928229a6f05b9a4359d41a19916806736105a63ad1447fc5da411b",
+      "bounds": [
+        49,
+        321,
+        950,
+        478
+      ]
+    },
+    "weapon_knife_canis": {
+      "char": "\ue02b",
+      "label": "KNIFE CANIS",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_canis.svg",
+      "sha256": "43e4f00c3a21cfc63130b22ce75e85b88902d8d717f95b25a0008f65f1982a02",
+      "bounds": [
+        49,
+        323,
+        950,
+        476
+      ]
+    },
+    "weapon_knife_cord": {
+      "char": "\ue02c",
+      "label": "KNIFE CORD",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_cord.svg",
+      "sha256": "4da91a7046c141a4199dc9fe903e123a28783bd1a7155de28e4842b42ccc5e11",
+      "bounds": [
+        50,
+        346,
+        950,
+        454
+      ]
+    },
+    "weapon_knife_css": {
+      "char": "\ue02d",
+      "label": "KNIFE CSS",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_css.svg",
+      "sha256": "f67c4c30a1f1fa2ff5f239d0f5b3d7365595e85b8104364a03ee0a531db80e9e",
+      "bounds": [
+        50,
+        325,
+        950,
+        475
+      ]
+    },
+    "weapon_knife_falchion": {
+      "char": "\ue02e",
+      "label": "KNIFE FALCHION",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_falchion.svg",
+      "sha256": "f8030069aa697b71b3e2b69d109a26e76b12103414504ff0b653b8b5b504ef6b",
+      "bounds": [
+        50,
+        299,
+        950,
+        501
+      ]
+    },
+    "weapon_knife_flip": {
+      "char": "\ue02f",
+      "label": "KNIFE FLIP",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_flip.svg",
+      "sha256": "f56c588ab56e3ae5799271e4b0ed958f1fe13d9d9c3ca26c1833901b97f1df2c",
+      "bounds": [
+        50,
+        316,
+        950,
+        484
+      ]
+    },
+    "weapon_knife_gut": {
+      "char": "\ue030",
+      "label": "KNIFE GUT",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_gut.svg",
+      "sha256": "1c904cf0c62109e3e934a36b5495dec590dbc39afc07c2d723277e953e6b1da2",
+      "bounds": [
+        50,
+        315,
+        950,
+        485
+      ]
+    },
+    "weapon_knife_gypsy_jackknife": {
+      "char": "\ue031",
+      "label": "KNIFE GYPSY JACKKNIFE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_gypsy_jackknife.svg",
+      "sha256": "6d758a1dfab5ae939af42e94fa5508b83893e2da96f71f80e1e28ec831045686",
+      "bounds": [
+        38,
+        307,
+        950,
+        492
+      ]
+    },
+    "weapon_knife_karambit": {
+      "char": "\ue032",
+      "label": "KNIFE KARAMBIT",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_karambit.svg",
+      "sha256": "75996f79a8b1417c20497fc6d4f99f32b19f4d21bee99337991eb5a35c26e82b",
+      "bounds": [
+        50,
+        231,
+        950,
+        569
+      ]
+    },
+    "weapon_knife_kukri": {
+      "char": "\ue033",
+      "label": "KNIFE KUKRI",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_kukri.svg",
+      "sha256": "7477b8d6485ef9287b19210ceb299ceb2cd4a5083c8a42dc0bc4c2e9ea13f762",
+      "bounds": [
+        48,
+        312,
+        950,
+        487
+      ]
+    },
+    "weapon_knife_m9_bayonet": {
+      "char": "\ue034",
+      "label": "KNIFE M9 BAYONET",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_m9_bayonet.svg",
+      "sha256": "353631b54381dc17ba0a32dab350a129c619940a416a17e2a24afd5d485aa00c",
+      "bounds": [
+        50,
+        282,
+        950,
+        518
+      ]
+    },
+    "weapon_knife_outdoor": {
+      "char": "\ue035",
+      "label": "KNIFE OUTDOOR",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_outdoor.svg",
+      "sha256": "d6f3f1df98fe46ebab148f94951278b8cdf88592fc54048216b07c5d994c3b1c",
+      "bounds": [
+        31,
+        306,
+        950,
+        493
+      ]
+    },
+    "weapon_knife_push": {
+      "char": "\ue036",
+      "label": "KNIFE PUSH",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_push.svg",
+      "sha256": "ee845251c22b5650df6adb7a51608b30ba8270ea12dda32b8a1f8fad97f91d4e",
+      "bounds": [
+        50,
+        265,
+        950,
+        535
+      ]
+    },
+    "weapon_knife_skeleton": {
+      "char": "\ue037",
+      "label": "KNIFE SKELETON",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_skeleton.svg",
+      "sha256": "26558011906e6bad32475a93484ed37a3ce27cbb129c3b279a9fd13b57814a40",
+      "bounds": [
+        50,
+        318,
+        950,
+        482
+      ]
+    },
+    "weapon_knife_stiletto": {
+      "char": "\ue038",
+      "label": "KNIFE STILETTO",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_stiletto.svg",
+      "sha256": "b2635f8123a5f5a8d619ee1f188ae28d488e71f21d3d41e06e571b068101a74d",
+      "bounds": [
+        36,
+        336,
+        950,
+        460
+      ]
+    },
+    "weapon_knife_survival_bowie": {
+      "char": "\ue039",
+      "label": "KNIFE SURVIVAL BOWIE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_survival_bowie.svg",
+      "sha256": "305685d6dbe89e89b5128bd7e5a0b5b9ff38405d161014ee179dc472ae9e6236",
+      "bounds": [
+        50,
+        309,
+        950,
+        491
+      ]
+    },
+    "weapon_knife_t": {
+      "char": "\ue03a",
+      "label": "KNIFE T",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_t.svg",
+      "sha256": "144dc8bc77261342ce454b61d950f9ea8ca42f5d8b0cf5da4114dab374ed4c85",
+      "bounds": [
+        50,
+        299,
+        950,
+        501
+      ]
+    },
+    "weapon_knife_tactical": {
+      "char": "\ue03b",
+      "label": "KNIFE TACTICAL",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_tactical.svg",
+      "sha256": "d61ec0cb3330f83dc35e3998542fcc7ddcbbea70cb717b600a5136a362836bfb",
+      "bounds": [
+        50,
+        306,
+        950,
+        494
+      ]
+    },
+    "weapon_knife_twinblade": {
+      "char": "\ue03c",
+      "label": "KNIFE TWINBLADE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_twinblade.svg",
+      "sha256": "8883c79bd3cae421deb0ea5516f17f23fa07200ab95f7398261b6a8f406c41da",
+      "bounds": [
+        49,
+        278,
+        950,
+        522
+      ]
+    },
+    "weapon_knife_ursus": {
+      "char": "\ue03d",
+      "label": "KNIFE URSUS",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_ursus.svg",
+      "sha256": "aaa2f90e03a598435034bf7020f086a1a8c413f65c414d65d312bcb75b69fa52",
+      "bounds": [
+        50,
+        320,
+        950,
+        480
+      ]
+    },
+    "weapon_knife_widowmaker": {
+      "char": "\ue03e",
+      "label": "KNIFE WIDOWMAKER",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knife_widowmaker.svg",
+      "sha256": "1d22c552203e187cf4505171a40bce03d8511934c73b123127b7af58a26c1b4f",
+      "bounds": [
+        50,
+        244,
+        950,
+        556
+      ]
+    },
+    "weapon_knifegg": {
+      "char": "\ue03f",
+      "label": "KNIFEGG",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/knifegg.svg",
+      "sha256": "e06db25069dcd0373c83cc919b367aeec5c236ad82ebf6cd17bdbc8261e6b012",
+      "bounds": [
+        50,
+        297,
+        950,
+        503
+      ]
+    },
+    "weapon_lar": {
+      "char": "\ue040",
+      "label": "LAR",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/lar.svg",
+      "sha256": "becdb0dd42334c911fe8eddd97630fb44910730ffe30df6dbd917842cb42ab5e",
+      "bounds": [
+        50,
+        321,
+        950,
+        479
+      ]
+    },
+    "weapon_m249": {
+      "char": "\ue041",
+      "label": "M249",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/m249.svg",
+      "sha256": "ea67e1e5c63989fd81256c0348e8d373251f7f9ecc753c236884f9bcee0ca958",
+      "bounds": [
+        50,
+        272,
+        950,
+        528
+      ]
+    },
+    "weapon_m4a1": {
+      "char": "\ue042",
+      "label": "M4A1",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/m4a1.svg",
+      "sha256": "c68f386d16583e1828abe9aa30a8d212910e8a537e64311b0c95a9dd26df0982",
+      "bounds": [
+        50,
+        254,
+        950,
+        546
+      ]
+    },
+    "weapon_m4a1_silencer": {
+      "char": "\ue043",
+      "label": "M4A1 SILENCER",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/m4a1_silencer.svg",
+      "sha256": "aff4d795596e16dcda102616cfb1195f65fef2c7a77349551d1fb406693675dc",
+      "bounds": [
+        50,
+        288,
+        950,
+        512
+      ]
+    },
+    "weapon_m4a1_silencer_off": {
+      "char": "\ue044",
+      "label": "M4A1 SILENCER OFF",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/m4a1_silencer_off.svg",
+      "sha256": "24cc7beb6821b9c0a09d99467d0bc458f3e98575b02f18bbe6f8cb8635363269",
+      "bounds": [
+        50,
+        259,
+        950,
+        541
+      ]
+    },
+    "weapon_mac10": {
+      "char": "\ue045",
+      "label": "MAC10",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/mac10.svg",
+      "sha256": "9ae3a39d31c291a7ea39e3dc7ba69df5f61abda886c24e9464b78bc081947871",
+      "bounds": [
+        50,
+        81,
+        950,
+        719
+      ]
+    },
+    "weapon_mag7": {
+      "char": "\ue046",
+      "label": "MAG7",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/mag7.svg",
+      "sha256": "dde703bc9770dcdfdfd6eb8c629f1b552ed317bc2e45e9ea30d9583560b6d6de",
+      "bounds": [
+        50,
+        234,
+        950,
+        566
+      ]
+    },
+    "weapon_melee": {
+      "char": "\ue047",
+      "label": "MELEE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/melee.svg",
+      "sha256": "598b1da2d938142a01bae59f44d37e0a13a31a95851400eadb025b3362532e9c",
+      "bounds": [
+        59,
+        -52,
+        944,
+        857
+      ]
+    },
+    "weapon_molotov": {
+      "char": "\ue048",
+      "label": "MOLOTOV",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/molotov.svg",
+      "sha256": "bb4b5a04eefa1f4cbe7312969a09d2dc70dd2c2cc02b9938fa8e48c0ea4a2a4d",
+      "bounds": [
+        191,
+        -54,
+        806,
+        850
+      ]
+    },
+    "weapon_movelinear": {
+      "char": "\ue049",
+      "label": "MOVELINEAR",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/movelinear.svg",
+      "sha256": "9f6d6b09816d08a08a7a4d31293ddfc93a858a6655769045c46e4492223dd16d",
+      "bounds": [
+        50,
+        -42,
+        950,
+        842
+      ]
+    },
+    "weapon_mp5sd": {
+      "char": "\ue04a",
+      "label": "MP5SD",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/mp5sd.svg",
+      "sha256": "293459424fa4f707e2633db6e25897f34a12795bee702fc6caaf5e83902593d2",
+      "bounds": [
+        50,
+        217,
+        950,
+        583
+      ]
+    },
+    "weapon_mp7": {
+      "char": "\ue04b",
+      "label": "MP7",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/mp7.svg",
+      "sha256": "98cef1cc8dc3f84c697e4b1e4d503995a758fd54251e430a393cccf53e521d84",
+      "bounds": [
+        50,
+        124,
+        950,
+        676
+      ]
+    },
+    "weapon_mp9": {
+      "char": "\ue04c",
+      "label": "MP9",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/mp9.svg",
+      "sha256": "f2736559af3cf5d384fe936cfdc7dcc7bac79adf4dfb993f03fc0f754aec0675",
+      "bounds": [
+        50,
+        221,
+        950,
+        579
+      ]
+    },
+    "weapon_negev": {
+      "char": "\ue04d",
+      "label": "NEGEV",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/negev.svg",
+      "sha256": "d27c27aff59020e3d7c432246d51efbf818d24dcb4a3d2da4fee9dc0bf755502",
+      "bounds": [
+        50,
+        223,
+        950,
+        577
+      ]
+    },
+    "weapon_nova": {
+      "char": "\ue04e",
+      "label": "NOVA",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/nova.svg",
+      "sha256": "2e77653e9b690b25ba4ece3a7828f2bca24494fa308a55b27a0a7451040f3d0b",
+      "bounds": [
+        50,
+        306,
+        950,
+        494
+      ]
+    },
+    "weapon_p2000": {
+      "char": "\ue04f",
+      "label": "P2000",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/p2000.svg",
+      "sha256": "9379cb56c24df02591b67170cb5e67cc18ae6fdc551b38bcf0c1fab79754eba7",
+      "bounds": [
+        44,
+        59,
+        951,
+        743
+      ]
+    },
+    "weapon_p250": {
+      "char": "\ue050",
+      "label": "P250",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/p250.svg",
+      "sha256": "4d5fe1ee88db7bd595480150139359ae952b5fbe9163e1611e90d920f04a4587",
+      "bounds": [
+        50,
+        57,
+        950,
+        743
+      ]
+    },
+    "weapon_p90": {
+      "char": "\ue051",
+      "label": "P90",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/p90.svg",
+      "sha256": "d2a30d9321086838bb61cd3a5f60926ba99d9a3d297cf315794073d11432c742",
+      "bounds": [
+        50,
+        217,
+        950,
+        581
+      ]
+    },
+    "weapon_pet": {
+      "char": "\ue052",
+      "label": "PET",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/pet.svg",
+      "sha256": "a34252c2ea98bce78d36e12fd6f16b03fb9f77e8e2ebb942c4ac769aa5435733",
+      "bounds": [
+        50,
+        -43,
+        964,
+        844
+      ]
+    },
+    "weapon_planted_c4": {
+      "char": "\ue053",
+      "label": "PLANTED C4",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/planted_c4.svg",
+      "sha256": "90985cf07242aae66618d791ad32228bbf9c7cf278c2c639f1b24c82000d925d",
+      "bounds": [
+        59,
+        -50,
+        941,
+        850
+      ]
+    },
+    "weapon_prop_exploding_barrel": {
+      "char": "\ue054",
+      "label": "PROP EXPLODING BARREL",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/prop_exploding_barrel.svg",
+      "sha256": "90985cf07242aae66618d791ad32228bbf9c7cf278c2c639f1b24c82000d925d",
+      "bounds": [
+        59,
+        -50,
+        941,
+        850
+      ]
+    },
+    "weapon_revolver": {
+      "char": "\ue055",
+      "label": "REVOLVER",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/revolver.svg",
+      "sha256": "85423365b403d16981af7f23efc9de37a43ab2fafe4d7daff3ef4630d4fa7178",
+      "bounds": [
+        49,
+        155,
+        950,
+        645
+      ]
+    },
+    "weapon_sawedoff": {
+      "char": "\ue056",
+      "label": "SAWEDOFF",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/sawedoff.svg",
+      "sha256": "492bcfc4cef622603818a7a10f1aac761739b2a86cbd097166f7e780aced8dbb",
+      "bounds": [
+        50,
+        307,
+        950,
+        493
+      ]
+    },
+    "weapon_scar20": {
+      "char": "\ue057",
+      "label": "SCAR20",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/scar20.svg",
+      "sha256": "0440b6a362ddf11f9e4dd3259787e6c2b774de05863b6a50cd9992d330b02aa0",
+      "bounds": [
+        50,
+        280,
+        950,
+        520
+      ]
+    },
+    "weapon_sg556": {
+      "char": "\ue058",
+      "label": "SG556",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/sg556.svg",
+      "sha256": "6f85e43eb6dbcf98db4a44cf713a7eb7b013b9dbeb303df0b0914f9b5c7de785",
+      "bounds": [
+        50,
+        243,
+        950,
+        557
+      ]
+    },
+    "weapon_smokegrenade": {
+      "char": "\ue059",
+      "label": "SMOKEGRENADE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/smokegrenade.svg",
+      "sha256": "fdf505befaa9d3dbf04d27204088b93e5941ba62ed8744e9675c907aa69056f9",
+      "bounds": [
+        297,
+        -50,
+        703,
+        850
+      ]
+    },
+    "weapon_spray0": {
+      "char": "\ue05a",
+      "label": "SPRAY0",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/spray0.svg",
+      "sha256": "f8eb49ff4533a8952a14ff536c1cb522358aef32621493e9caab99d633a23cf3",
+      "bounds": [
+        269,
+        -50,
+        731,
+        854
+      ]
+    },
+    "weapon_ssg08": {
+      "char": "\ue05b",
+      "label": "SSG08",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/ssg08.svg",
+      "sha256": "218f61a88399e39c7cdac2df2ec02c60c5dda6b4fafb207a52396d6507769c75",
+      "bounds": [
+        50,
+        286,
+        950,
+        514
+      ]
+    },
+    "weapon_stomp_damage": {
+      "char": "\ue05c",
+      "label": "STOMP DAMAGE",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/stomp_damage.svg",
+      "sha256": "a1bef8f63b77601a7ea089dc2a12a75d64505405f3f613ab9d4f234ed75f1bd4",
+      "bounds": [
+        50,
+        50,
+        950,
+        682
+      ]
+    },
+    "weapon_taser": {
+      "char": "\ue05d",
+      "label": "TASER",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/taser.svg",
+      "sha256": "3e23293b5b1859df2a40afd90e84f77c1f7b966a65fdf8369799cf6902058e85",
+      "bounds": [
+        47,
+        68,
+        950,
+        731
+      ]
+    },
+    "weapon_tec9": {
+      "char": "\ue05e",
+      "label": "TEC9",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/tec9.svg",
+      "sha256": "e6ad763f87c40d442fbafb8fddb99abe6bb8234f73ed0c2f0fe961897ac448fd",
+      "bounds": [
+        50,
+        141,
+        950,
+        659
+      ]
+    },
+    "weapon_ump45": {
+      "char": "\ue05f",
+      "label": "UMP45",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/ump45.svg",
+      "sha256": "6879c7f203107cd9d0e149da01116a4fed286127e3095a2d1da927c9624e801f",
+      "bounds": [
+        50,
+        238,
+        950,
+        562
+      ]
+    },
+    "weapon_usp_silencer": {
+      "char": "\ue060",
+      "label": "USP SILENCER",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/usp_silencer.svg",
+      "sha256": "79631bfd4d403d3a256eb3b534a8014754961b8a5c3c8b9294f45f639519e5a7",
+      "bounds": [
+        50,
+        234,
+        950,
+        566
+      ]
+    },
+    "weapon_usp_silencer_off": {
+      "char": "\ue061",
+      "label": "USP SILENCER OFF",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/usp_silencer_off.svg",
+      "sha256": "94c34f7348ca40a541783543b47192d021905201fed1dafc3cccffc81414f084",
+      "bounds": [
+        49,
+        87,
+        950,
+        713
+      ]
+    },
+    "weapon_xm1014": {
+      "char": "\ue062",
+      "label": "XM1014",
+      "source": "https://raw.githubusercontent.com/Juknum/counter-strike-icons/main/cs2/panorama/images/icons/equipment/xm1014.svg",
+      "sha256": "d7e05c7fad78fb86826b944a9327927bc49f0933400a08d129ba55fdb1fd1e26",
+      "bounds": [
+        50,
+        301,
+        950,
+        499
+      ]
+    },
+    "event_disc": {
+      "char": "\ue063",
+      "label": "event_disc",
+      "source": "project geometry; shared exact centre (500,400)",
+      "bounds": [
+        50,
+        -50,
+        950,
+        850
+      ]
+    },
+    "event_headshot_ink": {
+      "char": "\ue064",
+      "label": "event_headshot_ink",
+      "source": "project geometry; shared exact centre (500,400)",
+      "bounds": [
+        230,
+        130,
+        770,
+        670
+      ]
+    },
+    "event_bomb_plant": {
+      "char": "\ue065",
+      "label": "C4 plant",
+      "source": "Valve C4 silhouette with project action mark",
+      "bounds": [
+        63,
+        84,
+        910,
+        716
+      ]
+    },
+    "event_bomb_defusing": {
+      "char": "\ue066",
+      "label": "C4 defusing",
+      "source": "Valve C4 silhouette with project action mark",
+      "bounds": [
+        63,
+        84,
+        938,
+        716
+      ]
+    },
+    "event_bomb_defused": {
+      "char": "\ue067",
+      "label": "C4 defused",
+      "source": "Valve C4 silhouette with project action mark",
+      "bounds": [
+        63,
+        84,
+        940,
+        716
+      ]
+    },
+    "event_bomb_exploded": {
+      "char": "\ue068",
+      "label": "C4 exploded",
+      "source": "Valve C4 silhouette with project action mark",
+      "bounds": [
+        63,
+        84,
+        980,
+        716
+      ]
+    }
+  }
+}

@@ -1,0 +1,3 @@
+Counter-Strike equipment silhouettes are Valve Corporation assets.
+Extracted SVG source: https://github.com/Juknum/counter-strike-icons/tree/main/cs2/panorama/images/icons/equipment
+The TTF packaging and event-status geometry were generated for MS Mesh.

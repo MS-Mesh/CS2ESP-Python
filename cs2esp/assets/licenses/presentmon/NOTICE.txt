@@ -1,0 +1,10 @@
+PresentMon Console 2.6.0
+
+Copyright (C) 2017-2024 Intel Corporation.
+Source: https://github.com/GameTechDev/PresentMon
+Official binary: https://github.com/GameTechDev/PresentMon/releases/tag/v2.6.0
+SHA-256: B2A706BC6AD475749E3B7E3409263AA1E6906D45BDCF993F6DBC0F660188F1AF
+The executable is Authenticode-signed by Intel Corporation.
+
+PresentMon is distributed under the MIT license in LICENSE.txt. Additional
+third-party notices supplied by the project are in THIRD_PARTY.txt.
